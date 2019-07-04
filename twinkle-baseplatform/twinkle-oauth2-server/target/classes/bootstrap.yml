@@ -1,9 +1,0 @@
-
-spring:
-  application:
-    name: authserver
-  cloud:
-    config:
-      uri: http://${CONFIGSERVER_SERVICE_HOST}:${CONFIGSERVER_SERVICE_PORT}
-encrypt:
-  failOnError: false

@@ -1,9 +1,0 @@
-
-spring:
-  application:
-    name: gateway
-  cloud:
-    config:
-      uri: http://${CONFIGSERVER_SERVICE_HOST}:${CONFIGSERVER_SERVICE_PORT}
-encrypt:
-  failOnError: false
