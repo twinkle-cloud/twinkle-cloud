@@ -1,0 +1,5 @@
+spring:
+  profiles: cloud
+  application:
+    name: config-Server
+    

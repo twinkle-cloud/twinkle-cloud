@@ -1,0 +1,15 @@
+/Users/chenxj/Documents/Idea_Projects/twinkle-cloud/twinkle-core/twinkle-user-mgmt/src/main/java/com/twinkle/cloud/core/usermgmt/StartupRunner.java
+/Users/chenxj/Documents/Idea_Projects/twinkle-cloud/twinkle-core/twinkle-user-mgmt/src/main/java/com/twinkle/cloud/core/usermgmt/data/HelloRequest.java
+/Users/chenxj/Documents/Idea_Projects/twinkle-cloud/twinkle-core/twinkle-user-mgmt/src/main/java/com/twinkle/cloud/core/usermgmt/controller/HelloController.java
+/Users/chenxj/Documents/Idea_Projects/twinkle-cloud/twinkle-core/twinkle-user-mgmt/src/main/java/com/twinkle/cloud/core/usermgmt/config/AsmClassLoader.java
+/Users/chenxj/Documents/Idea_Projects/twinkle-cloud/twinkle-core/twinkle-user-mgmt/src/main/java/com/twinkle/cloud/core/usermgmt/ApplicationBootStrap.java
+/Users/chenxj/Documents/Idea_Projects/twinkle-cloud/twinkle-core/twinkle-user-mgmt/src/main/java/com/twinkle/cloud/core/usermgmt/config/AsmBeanDefinitionRegistryPostProcessor.java
+/Users/chenxj/Documents/Idea_Projects/twinkle-cloud/twinkle-core/twinkle-user-mgmt/src/main/java/com/twinkle/cloud/core/usermgmt/config/SwaggerConfig.java
+/Users/chenxj/Documents/Idea_Projects/twinkle-cloud/twinkle-core/twinkle-user-mgmt/src/main/java/com/twinkle/cloud/core/usermgmt/config/AutoBeanDefinitionRegistryPostProcessor.java
+/Users/chenxj/Documents/Idea_Projects/twinkle-cloud/twinkle-core/twinkle-user-mgmt/src/main/java/com/twinkle/cloud/core/usermgmt/config/HelloworldClassAdapter.java
+/Users/chenxj/Documents/Idea_Projects/twinkle-cloud/twinkle-core/twinkle-user-mgmt/src/main/java/com/twinkle/cloud/core/usermgmt/config/SpringContextHolder.java
+/Users/chenxj/Documents/Idea_Projects/twinkle-cloud/twinkle-core/twinkle-user-mgmt/src/main/java/com/twinkle/cloud/core/usermgmt/service/HelloWorldService.java
+/Users/chenxj/Documents/Idea_Projects/twinkle-cloud/twinkle-core/twinkle-user-mgmt/src/main/java/com/twinkle/cloud/core/usermgmt/config/TwinkleConfig.java
+/Users/chenxj/Documents/Idea_Projects/twinkle-cloud/twinkle-core/twinkle-user-mgmt/src/main/java/com/twinkle/cloud/core/usermgmt/SecondRunner.java
+/Users/chenxj/Documents/Idea_Projects/twinkle-cloud/twinkle-core/twinkle-user-mgmt/src/main/java/com/twinkle/cloud/core/usermgmt/config/HellworldMethodTransformer.java
+/Users/chenxj/Documents/Idea_Projects/twinkle-cloud/twinkle-core/twinkle-user-mgmt/src/main/java/com/twinkle/cloud/core/usermgmt/service/impl/HelloWorldServiceImpl.java

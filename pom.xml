@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.twinkle.cloud</groupId>
+    <artifactId>twinkle-cloud</artifactId>
+    <version>0.1.0</version>
+    <packaging>pom</packaging>
+    <name>Twinkle Cloud - Twinkle Root</name>
+    <description>Twinkle Cloud Platform (Include SAAS and Private PAAS).</description>
+
+    <modules>
+        <module>twinkle-common</module><!--
+        <module>twinkle-asm</module>-->
+        <module>twinkle-baseplatform</module>
+        <module>twinkle-core</module>
+        <module>twinkle-composite</module>
+        <module>twinkle-api</module>
+    </modules>
+
+    <parent>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-parent</artifactId>
+        <version>Finchley.SR2</version>
+        <relativePath/>
+        <!-- lookup parent from repository Brixton.RELEASE -->
+    </parent>
+    <!-- release -->
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <twinklecloud.version>0.1.0</twinklecloud.version>
+
+        <!-- docker images's tag -->
+        <kubeimage.version>latest</kubeimage.version>
+        <kube-dev.version>0.0.1</kube-dev.version>
+        <kube-test.version>0.1.0</kube-test.version>
+        <kube-pro.version>1.0.0</kube-pro.version>
+        <!-- latest: for dev env, 0.2.0: for test env -->
+        <!-- Docker Hub configuration -->
+        <docker.mvnhup>twinklecloud-hub</docker.mvnhup>
+        <docker.registry>hub.twikle.net:8443</docker.registry>
+        <docker.registry.url>https://hub.twikle.net:8443</docker.registry.url>
+        <docker.image.prefix>twinklecloud</docker.image.prefix>
+
+        <!-- active profile, also can be defined in maven's settings.xml, or get from mvn cmd. -->
+        <profile.active>dev</profile.active>
+
+        <!-- 3rd parties libs' version -->
+        <spring-cloud.version>Finchley.SR2</spring-cloud.version>
+        <asm.version>7.1</asm.version>
+        <lombok.version>1.18.4</lombok.version>
+        <javamail.version>1.5.0-b01</javamail.version>
+        <commonspool.version>2.6.0</commonspool.version>
+        <jodatime.version>2.10.1</jodatime.version>
+        <commonslang.version>3.8.1</commonslang.version>
+        <commonscollection.version>4.1</commonscollection.version>
+        <commonbeanutils.version>1.9.3</commonbeanutils.version>
+        <bitwalker.version>1.21</bitwalker.version>
+        <zxing.version>3.3.3</zxing.version>
+        <logstash.version>5.2</logstash.version>
+        <hibernatejpa.version>1.0.2.Final</hibernatejpa.version>
+        <hibernatevalidator.version>6.0.13.Final</hibernatevalidator.version>
+        <validationapi.version>2.0.1.Final</validationapi.version>
+        <springfox.version>2.9.2</springfox.version>
+        <modelmapper.version>2.3.1</modelmapper.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <okhttp3.version>3.11.0</okhttp3.version>
+        <codecentric.version>2.1.1</codecentric.version>
+        <pagehelper.version>1.2.10</pagehelper.version>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <spring.profiles.active>development</spring.profiles.active>
+                <kubeimage.version>${kube-dev.version}</kubeimage.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <spring.profiles.active>test</spring.profiles.active>
+                <kubeimage.version>${kube-test.version}</kubeimage.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>production</id>
+            <properties>
+                <spring.profiles.active>production</spring.profiles.active>
+                <kubeimage.version>${kube-pro.version}</kubeimage.version>
+            </properties>
+        </profile>
+    </profiles>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.twinkle.cloud</groupId>
+                <artifactId>twinkle-common-security</artifactId>
+                <version>${twinklecloud.version}</version>
+                <type>jar</type>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.twinkle.cloud</groupId>
+                <artifactId>twinkle-common-auth</artifactId>
+                <version>${twinklecloud.version}</version>
+                <type>jar</type>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.twinkle.cloud</groupId>
+                <artifactId>twinkle-common-data</artifactId>
+                <version>${twinklecloud.version}</version>
+                <type>jar</type>
+                <scope>compile</scope>
+            </dependency>
+            <!-- Twinkle Common libs. -->
+            <dependency>
+                <groupId>com.twinkle.cloud</groupId>
+                <artifactId>twinkle-common-asm</artifactId>
+                <version>${twinklecloud.version}</version>
+                <type>jar</type>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.twinkle.cloud</groupId>
+                <artifactId>twinkle-common-mybatis</artifactId>
+                <version>${twinklecloud.version}</version>
+                <type>jar</type>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.twinkle.cloud</groupId>
+                <artifactId>twinkle-common-utils</artifactId>
+                <version>${twinklecloud.version}</version>
+                <type>jar</type>
+                <scope>compile</scope>
+            </dependency>
+            <!-- ASM Support. -->
+            <dependency>
+                <groupId>org.ow2.asm</groupId>
+                <artifactId>asm</artifactId>
+                <version>${asm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.ow2.asm</groupId>
+                <artifactId>asm-commons</artifactId>
+                <version>${asm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.ow2.asm</groupId>
+                <artifactId>asm-tree</artifactId>
+                <version>${asm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.ow2.asm</groupId>
+                <artifactId>asm-analysis</artifactId>
+                <version>${asm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.ow2.asm</groupId>
+                <artifactId>asm-util</artifactId>
+                <version>${asm.version}</version>
+            </dependency>
+            <!-- lombok lib -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.mail</groupId>
+                <artifactId>mail</artifactId>
+                <version>${javamail.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>${jodatime.version}</version>
+            </dependency>
+
+            <!-- Common libs -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>${commonspool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commonslang.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${commonscollection.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${commonbeanutils.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-text</artifactId>
+                <version>1.6</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>28.0-jre</version>
+            </dependency>
+            <dependency>
+                <groupId>net.sourceforge.jregex</groupId>
+                <artifactId>jregex</artifactId>
+                <version>1.2_01</version>
+            </dependency>
+            <!-- Browser related libs. -->
+            <dependency>
+                <groupId>eu.bitwalker</groupId>
+                <artifactId>UserAgentUtils</artifactId>
+                <version>${bitwalker.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.zxing</groupId>
+                <artifactId>core</artifactId>
+                <version>${zxing.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.zxing</groupId>
+                <artifactId>javase</artifactId>
+                <version>${zxing.version}</version>
+            </dependency>
+            <!-- LogStash formatter. -->
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${logstash.version}</version>
+            </dependency>
+            <!-- Hibernate JPA support. -->
+            <dependency>
+                <groupId>org.hibernate.javax.persistence</groupId>
+                <artifactId>hibernate-jpa-2.1-api</artifactId>
+                <version>${hibernatejpa.version}</version>
+            </dependency>
+            <!-- Validation support. -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernatevalidator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${validationapi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <!-- Swagger2 libs -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${springfox.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${springfox.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-spi</artifactId>
+                <version>${springfox.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.modelmapper</groupId>
+                <artifactId>modelmapper</artifactId>
+                <version>${modelmapper.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${okhttp3.version}</version>
+            </dependency>
+            <!-- Spring boot admin lib. -->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-server</artifactId>
+                <version>${codecentric.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-server-ui</artifactId>
+                <version>${codecentric.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-client</artifactId>
+                <version>${codecentric.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>${codecentric.version}</version>
+            </dependency>
+            <!-- MyBatis Page Support -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.version}</version>
+            </dependency>
+
+            <!-- General mapper -->
+            <dependency>
+                <groupId>tk.mybatis</groupId>
+                <artifactId>mapper-spring-boot-starter</artifactId>
+                <version>2.0.4</version>
+            </dependency>
+            <!-- druid -->
+            <dependency>
+                <groupId>com.github.drtrang</groupId>
+                <artifactId>druid-spring-boot2-starter</artifactId>
+                <version>1.1.10.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+                <version>3.0-alpha-1</version>
+            </dependency>
+            <dependency>
+						    <groupId>com.alibaba</groupId>
+						    <artifactId>fastjson</artifactId>
+						    <version>1.2.58</version>
+						</dependency>
+        </dependencies>
+    </dependencyManagement>
+    <distributionManagement>
+        <repository>
+            <id>twinkle-nexus-releases</id>
+            <name>Nexus Release Repository</name>
+            <url>http://mvn-repo.twinkle.net:9881/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>twinkle-nexus-snapshots</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>http://mvn-repo.twinkle.net:9881/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+</project>

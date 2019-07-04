@@ -1,0 +1,122 @@
+
+server:
+  port: 8761
+   
+logging:
+  path: /com.twinkle.cloud.common.asm.def.var/log/micro/baseplatform/
+
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+    restart:
+      enabled: true
+    health:
+      enabled: true
+
+---
+spring:
+  profiles: cloud
+eureka:
+  server:
+    waitTimeInMsWhenSyncEmpty: 0
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${DISCOVERY_SERVICE_HOST}:${DISCOVERY_SERVICE_PORT}/eureka/
+
+---
+spring:
+  profiles: cloud1
+eureka:
+  server:
+    waitTimeInMsWhenSyncEmpty: 0
+    enable-self-preservation: true
+    eviction-interval-timer-in-ms: 4000
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${PRODISCOVERY2_SERVICE_HOST}:${PRODISCOVERY2_SERVICE_PORT}/eureka/,http://${PRODISCOVERY3_SERVICE_HOST}:${PRODISCOVERY3_SERVICE_PORT}/eureka/
+---
+spring:
+  profiles: cloud2
+eureka:
+  server:
+    waitTimeInMsWhenSyncEmpty: 0
+    enable-self-preservation: true
+    eviction-interval-timer-in-ms: 4000
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${PRODISCOVERY1_SERVICE_HOST}:${PRODISCOVERY1_SERVICE_PORT}/eureka/,http://${PRODISCOVERY3_SERVICE_HOST}:${PRODISCOVERY3_SERVICE_PORT}/eureka/
+
+---
+spring:
+  profiles: cloud3
+eureka:
+  server:
+    waitTimeInMsWhenSyncEmpty: 0
+    enable-self-preservation: true
+    eviction-interval-timer-in-ms: 4000
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${PRODISCOVERY2_SERVICE_HOST}:${PRODISCOVERY2_SERVICE_PORT}/eureka/,http://${PRODISCOVERY1_SERVICE_HOST}:${PRODISCOVERY1_SERVICE_PORT}/eureka/
+
+---
+spring:
+  profiles: development
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${DEVDISCOVERY_SERVICE_HOST}:${DEVDISCOVERY_SERVICE_PORT}/eureka/
+  server:
+    waitTimeInMsWhenSyncEmpty: 0
+    
+
+---
+spring:
+  profiles: test
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${TESTDISCOVERY_SERVICE_HOST}:${TESTDISCOVERY_SERVICE_PORT}/eureka/
+  server:
+    waitTimeInMsWhenSyncEmpty: 0
+  
+---
+spring:
+  profiles: local
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    preferIpAddress: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  server:
+    waitTimeInMsWhenSyncEmpty: 0
+  
+  
+#spring.cloud.config.discovery.enabled: true

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="ts-sysbase">
+		<class>com.twinkle.cloud.core.usermgmt.data.domain.UOrgRoleMap</class>
+		<class>com.twinkle.cloud.core.usermgmt.data.domain.UOrgUserMap</class>
+		<class>com.twinkle.cloud.core.usermgmt.data.domain.URole</class>
+		<class>com.twinkle.cloud.core.usermgmt.data.domain.URoleMenuMap</class>
+		<class>com.twinkle.cloud.core.usermgmt.data.domain.UUser</class>
+		<class>com.twinkle.cloud.core.usermgmt.data.domain.UUserActivation</class>
+		<class>com.twinkle.cloud.core.usermgmt.data.domain.UUserAddr</class>
+		<class>com.twinkle.cloud.core.usermgmt.data.domain.UUserRoleMap</class>
+		<class>com.twinkle.cloud.core.usermgmt.data.domain.UOrganization</class>
+		<class>com.twinkle.cloud.core.usermgmt.data.domain.UTenant</class>
+		<class>com.twinkle.cloud.core.usermgmt.data.domain.UTenantAddr</class>
+	</persistence-unit>
+</persistence>

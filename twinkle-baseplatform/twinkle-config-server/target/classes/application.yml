@@ -1,0 +1,97 @@
+
+server:
+  port: 8888
+logging:
+  path: /com.twinkle.cloud.common.asm.def.var/log/micro/baseplatform/
+
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+    restart:
+      enabled: true
+    health:
+      enabled: true
+
+---
+spring:
+  profiles: cloud
+  cloud:
+    config:
+      server:
+        git:
+          uri: http://githup.com/cxj110/twinkle-cloud/config/production.git
+          #If you need to build your own config server, please use your account & password
+          username: SaasAdmin
+          password: 5MCqizxdKkA-UTiMRZxC
+        health:
+          repositories:
+            discovery:
+              label: master
+              profiles: cloud
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${PRODISCOVERY_SERVICE_HOST}:${PRODISCOVERY_SERVICE_PORT}/eureka/
+info:
+  description: Config Server for twinkle Cloud project
+  url: http://githup.com/cxj110/twinkle-cloud/config/production.git
+
+---
+spring:
+  profiles: development
+  cloud:
+    config:
+      server:
+        git:
+          uri: http://githup.com/cxj110/twinkle-cloud/config/development.git
+           #If you need to build your own config server, please use your account & password
+          username: SaasAdmin
+          password: 5MCqizxdKkA-UTiMRZxC
+        health:
+          repositories:
+            discovery:
+              label: master
+              profiles: cloud
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${DEVDISCOVERY_SERVICE_HOST}:${DEVDISCOVERY_SERVICE_PORT}/eureka/
+
+---
+spring:
+  profiles: test
+  cloud:
+    config:
+      server:
+        git:
+          uri: http://githup.com/cxj110/twinkle-cloud/config/development.git
+          #If you need to build your own config server, please use your account & password
+          username: SaasAdmin
+          password: 5MCqizxdKkA-UTiMRZxC
+        health:
+          repositories:
+            discovery:
+              label: master
+              profiles: cloud
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${TESTDISCOVERY_SERVICE_HOST}:${TESTDISCOVERY_SERVICE_PORT}/eureka/
+      
+
