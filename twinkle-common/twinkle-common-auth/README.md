@@ -1,1 +1,0 @@
-The Authentication Client lib.

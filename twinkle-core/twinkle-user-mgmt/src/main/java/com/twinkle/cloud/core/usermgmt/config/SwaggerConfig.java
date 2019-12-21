@@ -33,7 +33,7 @@ public class SwaggerConfig {
                 .useDefaultResponseMessages(false)
                 .forCodeGeneration(true)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.twinkle.cloud.core.usermgmt.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.twinkle.cloud.core.usermgmt"))
                 .paths(PathSelectors.any()).build();
     }
     private ApiInfo apiInfo() {

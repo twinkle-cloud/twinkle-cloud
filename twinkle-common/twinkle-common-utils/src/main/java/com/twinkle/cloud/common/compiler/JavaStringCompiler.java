@@ -1,7 +1,5 @@
 package com.twinkle.cloud.common.compiler;
 
-import com.twinkle.cloud.common.exception.CompilationException;
-
 import javax.tools.JavaCompiler;
 import javax.tools.JavaCompiler.CompilationTask;
 import javax.tools.JavaFileObject;
@@ -46,7 +44,7 @@ public class JavaStringCompiler {
             CompilationTask task = compiler.getTask(null, manager, null, null, null, fileObjects);
             Boolean result = task.call();
             if (result == null || !result) {
-                throw new CompilationException("Compilation failed.");
+                throw new RuntimeException("Compilation failed.");
             }
             return manager.getClassBytes();
         }

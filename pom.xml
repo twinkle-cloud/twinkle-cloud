@@ -11,18 +11,18 @@
     <description>Twinkle Cloud Platform (Include SAAS and Private PAAS).</description>
 
     <modules>
-        <module>twinkle-common</module><!--
-        <module>twinkle-asm</module>-->
-        <module>twinkle-baseplatform</module>
-        <module>twinkle-core</module>
-        <module>twinkle-composite</module>
-        <module>twinkle-api</module>
+        <module>twinkle-common</module>
+        <module>twinkle-security</module>
+        <!-- <module>twinkle-baseplatform</module>
+         <module>twinkle-core</module>
+         <module>twinkle-composite</module>
+         <module>twinkle-api</module>-->
     </modules>
 
     <parent>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-starter-parent</artifactId>
-        <version>Finchley.SR2</version>
+        <version>Hoxton.RELEASE</version>
         <relativePath/>
         <!-- lookup parent from repository Brixton.RELEASE -->
     </parent>
@@ -32,6 +32,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <twinklecloud.version>0.1.0</twinklecloud.version>
 
         <!-- docker images's tag -->
@@ -42,18 +44,18 @@
         <!-- latest: for dev env, 0.2.0: for test env -->
         <!-- Docker Hub configuration -->
         <docker.mvnhup>twinklecloud-hub</docker.mvnhup>
-        <docker.registry>hub.twikle.net:8443</docker.registry>
-        <docker.registry.url>https://hub.twikle.net:8443</docker.registry.url>
+        <docker.registry>hub.twinkle.net:8443</docker.registry>
+        <docker.registry.url>https://hub.twinkle.net:8443</docker.registry.url>
         <docker.image.prefix>twinklecloud</docker.image.prefix>
 
         <!-- active profile, also can be defined in maven's settings.xml, or get from mvn cmd. -->
         <profile.active>dev</profile.active>
 
         <!-- 3rd parties libs' version -->
-        <spring-cloud.version>Finchley.SR2</spring-cloud.version>
-        <asm.version>7.1</asm.version>
-        <lombok.version>1.18.4</lombok.version>
-        <javamail.version>1.5.0-b01</javamail.version>
+        <spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
+        <alibaba-cloud.version>2.1.0.RELEASE</alibaba-cloud.version>
+        <lombok.version>1.18.10</lombok.version>
+        <jetcache.version>2.5.15</jetcache.version>
         <commonspool.version>2.6.0</commonspool.version>
         <jodatime.version>2.10.1</jodatime.version>
         <commonslang.version>3.8.1</commonslang.version>
@@ -71,6 +73,7 @@
         <okhttp3.version>3.11.0</okhttp3.version>
         <codecentric.version>2.1.1</codecentric.version>
         <pagehelper.version>1.2.10</pagehelper.version>
+        <security.oauth.version>2.3.6.RELEASE</security.oauth.version>
     </properties>
 
     <profiles>
@@ -97,9 +100,60 @@
         </profile>
     </profiles>
     <dependencies>
+        <!--自省和监控的集成功能-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!--注册中心-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <!--配置中心-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-alibaba-nacos-config</artifactId>
+        </dependency>
+        <!--熔断降级-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
+        <!--日志跟踪-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-config</artifactId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
+        <!--消息总线-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+        </dependency>
+        <!--热加载-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+        <!--使用 lombok 简化 Java 代码-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <!--测试框架-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!--test数据库-->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -118,19 +172,19 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>com.twinkle.cloud</groupId>
-                <artifactId>twinkle-common-security</artifactId>
-                <version>${twinklecloud.version}</version>
-                <type>jar</type>
-                <scope>compile</scope>
-            </dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${alibaba-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency><!--
             <dependency>
-                <groupId>com.twinkle.cloud</groupId>
-                <artifactId>twinkle-common-auth</artifactId>
-                <version>${twinklecloud.version}</version>
-                <type>jar</type>
-                <scope>compile</scope>
-            </dependency>
+                <groupId>org.springframework.security.oauth</groupId>
+                <artifactId>spring-security-oauth-parent</artifactId>
+                <version>2.4.0.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>-->
             <dependency>
                 <groupId>com.twinkle.cloud</groupId>
                 <artifactId>twinkle-common-data</artifactId>
@@ -138,10 +192,18 @@
                 <type>jar</type>
                 <scope>compile</scope>
             </dependency>
+
             <!-- Twinkle Common libs. -->
             <dependency>
                 <groupId>com.twinkle.cloud</groupId>
-                <artifactId>twinkle-common-asm</artifactId>
+                <artifactId>twinkle-common-utils</artifactId>
+                <version>${twinklecloud.version}</version>
+                <type>jar</type>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.twinkle.cloud</groupId>
+                <artifactId>twinkle-common-cache</artifactId>
                 <version>${twinklecloud.version}</version>
                 <type>jar</type>
                 <scope>compile</scope>
@@ -153,49 +215,12 @@
                 <type>jar</type>
                 <scope>compile</scope>
             </dependency>
-            <dependency>
-                <groupId>com.twinkle.cloud</groupId>
-                <artifactId>twinkle-common-utils</artifactId>
-                <version>${twinklecloud.version}</version>
-                <type>jar</type>
-                <scope>compile</scope>
-            </dependency>
-            <!-- ASM Support. -->
-            <dependency>
-                <groupId>org.ow2.asm</groupId>
-                <artifactId>asm</artifactId>
-                <version>${asm.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.ow2.asm</groupId>
-                <artifactId>asm-commons</artifactId>
-                <version>${asm.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.ow2.asm</groupId>
-                <artifactId>asm-tree</artifactId>
-                <version>${asm.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.ow2.asm</groupId>
-                <artifactId>asm-analysis</artifactId>
-                <version>${asm.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.ow2.asm</groupId>
-                <artifactId>asm-util</artifactId>
-                <version>${asm.version}</version>
-            </dependency>
+
             <!-- lombok lib -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.mail</groupId>
-                <artifactId>mail</artifactId>
-                <version>${javamail.version}</version>
             </dependency>
 
             <dependency>
@@ -261,6 +286,12 @@
                 <groupId>net.logstash.logback</groupId>
                 <artifactId>logstash-logback-encoder</artifactId>
                 <version>${logstash.version}</version>
+            </dependency>
+            <!--jetcache缓存 -->
+            <dependency>
+                <groupId>com.alicp.jetcache</groupId>
+                <artifactId>jetcache-starter-redis</artifactId>
+                <version>${jetcache.version}</version>
             </dependency>
             <!-- Hibernate JPA support. -->
             <dependency>
@@ -341,27 +372,28 @@
 
             <!-- General mapper -->
             <dependency>
-                <groupId>tk.mybatis</groupId>
-                <artifactId>mapper-spring-boot-starter</artifactId>
-                <version>2.0.4</version>
-            </dependency>
-            <!-- druid -->
-            <dependency>
-                <groupId>com.github.drtrang</groupId>
-                <artifactId>druid-spring-boot2-starter</artifactId>
-                <version>1.1.10.2</version>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>1.1.9</version>
             </dependency>
 
             <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>servlet-api</artifactId>
-                <version>3.0-alpha-1</version>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.62</version>
             </dependency>
             <dependency>
-						    <groupId>com.alibaba</groupId>
-						    <artifactId>fastjson</artifactId>
-						    <version>1.2.58</version>
-						</dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.10.1</version>
+            </dependency>
+            <!-- Mybatis support -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>3.3.0</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
     <distributionManagement>

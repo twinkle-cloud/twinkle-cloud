@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>twinkle-common-utils</artifactId>
     <packaging>jar</packaging>
-    <name>Twinkle Cloud - Twinkle Common Utils Libary</name>
-    <description>Twinkle Cloud - Twinkle Common Utils Libary</description>
+    <name>Twinkle Cloud - Twinkle Common Utils Library</name>
+    <description>Twinkle Cloud - Twinkle Common Utils Library</description>
 
     <parent>
         <groupId>com.twinkle.cloud</groupId>
@@ -23,36 +23,8 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>eu.bitwalker</groupId>
-            <artifactId>UserAgentUtils</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.zxing</groupId>
-            <artifactId>core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.zxing</groupId>
-            <artifactId>javase</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
+            <groupId>com.twinkle.cloud</groupId>
+            <artifactId>twinkle-common-data</artifactId>
         </dependency>
     </dependencies>
 

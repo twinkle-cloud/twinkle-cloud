@@ -108,6 +108,5 @@
 		<module>twinkle-sysbase-mgmt</module>
 		<module>twinkle-user-mgmt</module>
 		<module>twinkle-ium</module>
-	<module>simple-service</module>
   </modules>
 </project>

@@ -1,9 +1,12 @@
 package com.twinkle.cloud.core.usermgmt.config;
 
+import com.alibaba.fastjson.JSONObject;
 import com.twinkle.cloud.common.compiler.JavaStringCompiler;
+import com.twinkle.cloud.core.usermgmt.controller.TwinkleRestController;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -11,6 +14,10 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.io.File;
 import java.io.InputStream;
@@ -29,10 +36,22 @@ import java.util.Map;
 @Slf4j
 //@Configuration
 public class AutoBeanDefinitionRegistryPostProcessor implements BeanDefinitionRegistryPostProcessor {
+    @Autowired
+    private RequestMappingHandlerMapping requestMappingHandlerMapping;
+    @Autowired
+    private TwinkleRestController twinkleRestController;
+
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
         // 注册Bean定义，容器根据定义返回bean
-        log.info("Going to load customized rest controller.");
+//        log.info("Going to load customized rest controller.");
+//
+//        try{
+//            this.addRestEndPoint();
+//        } catch (Exception e) {
+//            log.error("Encoutered Exception while adding the method.", e);
+//        }
+
 //        try {
 //            // 获取文件流
 //            ClassPathResource resource = new ClassPathResource("connector" + File.separator + "Hello2Controller.java");
@@ -60,11 +79,26 @@ public class AutoBeanDefinitionRegistryPostProcessor implements BeanDefinitionRe
 //        } catch (Exception ex) {
 //            log.error("The com.twinkle.cloud.common.asm.block.exception:", ex);
 //        }
-        log.info("Register hello2 successfully.");
+//        log.info("Register hello2 successfully.");
     }
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
 
     }
+
+//    private void addRestEndPoint() throws NoSuchMethodException{
+//        requestMappingHandlerMapping.registerMapping(
+//                RequestMappingInfo.paths("/twinkle/{_id}/name/{_name}")
+//                        .methods()
+//                        .methods(RequestMethod.POST)
+//                        .produces(MediaType.APPLICATION_JSON_VALUE)
+//                        .build(),
+//                twinkleRestController,
+//                TwinkleRestController.class.getDeclaredMethod(
+//                        "handerMethodWithParamsAndPathVars",
+//                        Map.class, Map.class, JSONObject.class
+//                )
+//        );
+//    }
 }

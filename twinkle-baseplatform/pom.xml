@@ -49,7 +49,5 @@
 		<module>twinkle-config-server</module>
 		<module>twinkle-gateway</module>
 		<module>twinkle-hystrix-dashboard</module>
- 		<module>twinkle-auth-server</module>
- 		<module>twinkle-oauth2-server</module>
 	</modules>
 </project>

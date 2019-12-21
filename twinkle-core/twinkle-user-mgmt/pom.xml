@@ -51,6 +51,10 @@
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.twinkle.cloud</groupId>
 			<artifactId>twinkle-common-asm</artifactId>
 		</dependency>
@@ -58,7 +62,11 @@
 			<groupId>com.twinkle.cloud</groupId>
 			<artifactId>twinkle-common-utils</artifactId>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>

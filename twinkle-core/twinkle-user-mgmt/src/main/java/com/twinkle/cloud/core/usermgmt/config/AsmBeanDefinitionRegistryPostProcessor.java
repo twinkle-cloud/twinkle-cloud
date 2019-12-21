@@ -33,7 +33,7 @@ import java.util.List;
  * @since JDK 1.8
  */
 @Slf4j
-@Configuration
+//@Configuration
 public class AsmBeanDefinitionRegistryPostProcessor implements BeanDefinitionRegistryPostProcessor {
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {

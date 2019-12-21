@@ -1,54 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.twinkle.cloud</groupId>
-		<artifactId>twinkle-cloud</artifactId>
-		<relativePath>../pom.xml</relativePath>
-		<version>0.1.0</version>
-	</parent>
-	<artifactId>twinkle-common</artifactId>
-	<packaging>pom</packaging>
-	<name>Twinkle Cloud - Twinkle Common.</name>
-	<description>Twinkle Cloud - Twinkle common components.</description>
-	<url>https://www.example.com</url>
-	<properties>
-		<project.uri>${project.baseUri}/../</project.uri>
-	</properties>
-	<licenses>
-		<license>
-			<name>Apache 2</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-			<distribution>repo</distribution>
-			<comments>A business-friendly OSS license</comments>
-		</license>
-	</licenses>
-	<developers>
-		<developer>
-			<id>xuejin</id>
-			<name>Chen XueJin</name>
-			<email>cxj_hit@126.com</email>
-			<organization>Twinkle Tech</organization>
-			<organizationUrl>https://www.example.com</organizationUrl>
-			<roles>
-				<role>architect</role>
-				<role>developer</role>
-			</roles>
-			<timezone>+8</timezone>
-		</developer>
-	</developers>
-	<dependencies>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-		</dependency>
-	</dependencies>
-	<modules>
-		<module>twinkle-common-asm</module>
-		<module>twinkle-common-data</module>
-		<module>twinkle-common-utils</module>
-		<module>twinkle-common-mybatis</module>
-		<module>twinkle-common-security</module>
-		<module>twinkle-common-auth</module>
-	</modules>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.twinkle.cloud</groupId>
+        <artifactId>twinkle-cloud</artifactId>
+        <relativePath>../pom.xml</relativePath>
+        <version>0.1.0</version>
+    </parent>
+    <artifactId>twinkle-common</artifactId>
+    <packaging>pom</packaging>
+    <name>Twinkle Cloud - Twinkle Common</name>
+    <description>Twinkle Cloud - Twinkle common components.</description>
+    <url>https://www.example.com</url>
+    <properties>
+        <project.uri>${project.baseUri}/../</project.uri>
+    </properties>
+    <licenses>
+        <license>
+            <name>Apache 2</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>xuejin</id>
+            <name>Chen XueJin</name>
+            <email>cxj_hit@126.com</email>
+            <organization>Twinkle Tech</organization>
+            <organizationUrl>https://www.example.com</organizationUrl>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
+    <modules>
+        <module>twinkle-common-data</module>
+        <module>twinkle-common-utils</module>
+        <module>twinkle-common-cache</module>
+        <module>twinkle-common-mybatis</module>
+    </modules>
 </project>

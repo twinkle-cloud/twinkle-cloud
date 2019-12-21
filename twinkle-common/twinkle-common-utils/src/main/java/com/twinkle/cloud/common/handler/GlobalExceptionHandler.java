@@ -1,8 +1,8 @@
 package com.twinkle.cloud.common.handler;
 
 import com.twinkle.cloud.common.constant.ResultCode;
-import com.twinkle.cloud.common.exception.BaseException;
 import com.twinkle.cloud.common.data.GeneralResult;
+import com.twinkle.cloud.common.exception.BaseException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,8 +29,8 @@ public class GlobalExceptionHandler {
         log.error(ex.getMessage(),ex);
         response.setStatus(500);
         GeneralResult tempResult = new GeneralResult();
-        tempResult.setResultCode(ex.getCode());
-        tempResult.setDetailDescription(ex.getMessage());
+        tempResult.setCode(ex.getCode());
+        tempResult.setDescription(ex.getMessage());
         return tempResult;
     }
 
@@ -40,8 +40,8 @@ public class GlobalExceptionHandler {
         log.error(ex.getMessage(),ex);
 
         GeneralResult tempResult = new GeneralResult();
-        tempResult.setResultCode(ResultCode.OPERATION_FAILED_UNKOWN);
-        tempResult.setDetailDescription(ex.getMessage());
+        tempResult.setCode(ResultCode.OPERATION_FAILED_UNKOWN);
+        tempResult.setDescription(ex.getMessage());
         return tempResult;
     }
 }
