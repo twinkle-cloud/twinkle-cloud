@@ -1,0 +1,58 @@
+spring:
+  rabbitmq:
+    host: ${RABBIT_MQ_HOST:localhost}
+    port: ${RABBIT_MQ_PORT:5672}
+    username: ${RABBIT_MQ_USERNAME:guest}
+    password: ${RABBIT_MQ_PASSWORD:guest}
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:1qaz\!QAZ}
+    lettuce:
+      pool:
+        max-active: 300
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:${DATASOURCE_DBTYPE:mysql}://${DATASOURCE_HOST:localhost}:${DATASOURCE_PORT:3306}/t_gateway
+    username: ${DATASOURCE_USERNAME:t_admin}
+    password: ${DATASOURCE_PASSWORD:abcd1234}
+
+  zipkin:
+    enabled: true
+    sender:
+      type: rabbit
+  sleuth:
+    enabled: true
+    http:
+      legacy:
+        enabled: true
+twinkle:
+  bus:
+    sender:
+      queue-name: event-gateway
+      exchange-name: spring-boot-exchange
+      routing-key: gateway-route
+      enable: true
+
+jetcache:
+  statIntervalMinutes: 15
+  areaInCacheName: false
+  hidePackages: com.twinkle.cloud
+  local:
+    # 默认永久本地缓存
+    default:
+      type: caffeine
+      keyConvertor: fastjson
+  remote:
+    # 默认永久的远程缓存
+    default:
+      type: redis.springdata
+      keyConvertor: fastjson
+      valueEncoder: kryo
+      valueDecoder: kryo
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

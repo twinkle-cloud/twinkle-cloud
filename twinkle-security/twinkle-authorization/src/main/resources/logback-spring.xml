@@ -12,12 +12,12 @@
 
 	<appender name="LOGSTASH"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${LOG_PATH}/user-mgmt.log/</file>
+		<file>${LOG_PATH}/authentication.log/</file>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<pattern>${default_pattern}</pattern>
 		</encoder>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${LOG_PATH}/logstash-user-mgmt-%d{yyyy-MM-dd}.log
+			<fileNamePattern>${LOG_PATH}/logstash-authentication-%d{yyyy-MM-dd}.log
 			</fileNamePattern>
 			<!-- keep 30 days' worth of history -->
 			<maxHistory>30</maxHistory>
@@ -65,6 +65,12 @@
 	</root>
 
 	<logger name="com.zaxxer">
+		<level value="ERROR" />
+	</logger>
+	<logger name="reactor">
+		<level value="ERROR" />
+	</logger>
+	<logger name="io">
 		<level value="ERROR" />
 	</logger>
 	<logger name="javax">

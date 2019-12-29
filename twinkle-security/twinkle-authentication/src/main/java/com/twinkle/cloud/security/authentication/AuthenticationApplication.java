@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Function: TODO ADD FUNCTION. <br/>
@@ -15,6 +16,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @see
  * @since JDK 1.8
  */
+@ComponentScan(basePackages ={"com.twinkle.cloud"})
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients

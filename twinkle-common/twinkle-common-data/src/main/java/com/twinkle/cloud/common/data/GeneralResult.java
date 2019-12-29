@@ -84,6 +84,10 @@ public class GeneralResult<T> {
         return new GeneralResult<>(_exception.getCode(), _data);
     }
 
+    public static GeneralResult fail(ErrorType _type) {
+        return new GeneralResult<>(_type.getCode(), _type.getMessage());
+    }
+
     public static GeneralResult fail(ErrorType _type, Object _data) {
         return new GeneralResult<>(_type.getCode(), _data);
     }

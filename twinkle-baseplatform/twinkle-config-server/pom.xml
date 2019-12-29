@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>twinkle-config-server</artifactId>
     <packaging>jar</packaging>
-    <name>Twinkle Cloud - Twinkle Configuration synch Server</name>
-    <description>Twinkle Cloud - Twinkle Configuration Synchronization Server</description>
+    <name>Twinkle Cloud - Twinkle Configuration Server</name>
+    <description>Twinkle Cloud - Twinkle Configuration Synchronization Server.</description>
 
     <parent>
         <groupId>com.twinkle.cloud</groupId>
@@ -18,10 +18,6 @@
         <dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -47,59 +43,26 @@
             </plugin>
 
             <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>0.4.5</version>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>1.8.0</version>
+                <configuration>
+                    <from>
+                        <image>${docker.registry}/jdk/openjdk:8-jre-alpine</image>
+                    </from>
+                    <to>
+                        <image>${docker.registry}/${docker.image.prefix}/${project.artifactId}:${kubeimage.version}</image>
+                    </to>
+                    <allowInsecureRegistries>true</allowInsecureRegistries>
+                </configuration>
                 <executions>
                     <execution>
-                        <id>build-image</id>
-                        <phase>package</phase>
+                        <phase>install</phase>
                         <goals>
                             <goal>build</goal>
                         </goals>
                     </execution>
-
-                    <execution>
-                        <id>tag-image</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>tag</goal>
-                        </goals>
-                        <configuration>
-                            <image>${docker.image.prefix}/${project.artifactId}:${project.version}</image>
-                            <newName>
-                                ${docker.registry}${docker.image.prefix}/${project.artifactId}:${kubeimage.version}
-                            </newName>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>push-image</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>push</goal>
-                        </goals>
-                        <configuration>
-                            <imageName>
-                                ${docker.registry}${docker.image.prefix}/${project.artifactId}:${kubeimage.version}
-                            </imageName>
-                        </configuration>
-                    </execution>
                 </executions>
-                <configuration>
-                    <serverId>${docker.mvnhup}</serverId>
-                    <registryUrl>${docker.registry.url}</registryUrl>
-                    <baseImage>java</baseImage><!-- :${project.version} -->
-                    <imageName>${docker.image.prefix}/${project.artifactId}:${project.version}</imageName>
-                    <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
-                    <forceTags>true</forceTags>
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
-                        </resource>
-                    </resources>
-                </configuration>
             </plugin>
         </plugins>
     </build>

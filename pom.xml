@@ -13,10 +13,10 @@
     <modules>
         <module>twinkle-common</module>
         <module>twinkle-security</module>
-        <!-- <module>twinkle-baseplatform</module>
-         <module>twinkle-core</module>
-         <module>twinkle-composite</module>
-         <module>twinkle-api</module>-->
+        <module>twinkle-baseplatform</module>
+        <!--<module>twinkle-core</module>
+        <module>twinkle-composite</module>
+        <module>twinkle-api</module>-->
     </modules>
 
     <parent>
@@ -41,6 +41,7 @@
         <kube-dev.version>0.0.1</kube-dev.version>
         <kube-test.version>0.1.0</kube-test.version>
         <kube-pro.version>1.0.0</kube-pro.version>
+        <kube-pro.version>1.0.0</kube-pro.version>
         <!-- latest: for dev env, 0.2.0: for test env -->
         <!-- Docker Hub configuration -->
         <docker.mvnhup>twinklecloud-hub</docker.mvnhup>
@@ -55,7 +56,7 @@
         <spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
         <alibaba-cloud.version>2.1.0.RELEASE</alibaba-cloud.version>
         <lombok.version>1.18.10</lombok.version>
-        <jetcache.version>2.5.15</jetcache.version>
+        <jetcache.version>2.6.0.M3</jetcache.version>
         <commonspool.version>2.6.0</commonspool.version>
         <jodatime.version>2.10.1</jodatime.version>
         <commonslang.version>3.8.1</commonslang.version>
@@ -74,6 +75,8 @@
         <codecentric.version>2.1.1</codecentric.version>
         <pagehelper.version>1.2.10</pagehelper.version>
         <security.oauth.version>2.3.6.RELEASE</security.oauth.version>
+        <mysql-driver.version>8.0.17</mysql-driver.version>
+        <pgsql-driver.version>42.2.8</pgsql-driver.version>
     </properties>
 
     <profiles>
@@ -105,30 +108,30 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        <!--注册中心-->
+        <!--注册中心
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-alibaba-nacos-discovery</artifactId>
-        </dependency>
-        <!--配置中心-->
+        </dependency>-->
+        <!--配置中心
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-alibaba-nacos-config</artifactId>
+        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+        <!--ConfigurationProperties类所需依赖，手动添加的-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
         <!--熔断降级-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
-        </dependency>
-        <!--日志跟踪-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-zipkin</artifactId>
-        </dependency>
-        <!--消息总线-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bus-amqp</artifactId>
         </dependency>
         <!--热加载-->
         <dependency>
@@ -177,7 +180,13 @@
                 <version>${alibaba-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency><!--
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-jwt</artifactId>
+                <version>1.1.0.RELEASE</version>
+            </dependency>
+            <!--
             <dependency>
                 <groupId>org.springframework.security.oauth</groupId>
                 <artifactId>spring-security-oauth-parent</artifactId>
@@ -210,7 +219,28 @@
             </dependency>
             <dependency>
                 <groupId>com.twinkle.cloud</groupId>
+                <artifactId>twinkle-common-bus</artifactId>
+                <version>${twinklecloud.version}</version>
+                <type>jar</type>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.twinkle.cloud</groupId>
                 <artifactId>twinkle-common-mybatis</artifactId>
+                <version>${twinklecloud.version}</version>
+                <type>jar</type>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.twinkle.cloud</groupId>
+                <artifactId>twinkle-common-web</artifactId>
+                <version>${twinklecloud.version}</version>
+                <type>jar</type>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.twinkle.cloud</groupId>
+                <artifactId>twinkle-authclient</artifactId>
                 <version>${twinklecloud.version}</version>
                 <type>jar</type>
                 <scope>compile</scope>
@@ -290,7 +320,22 @@
             <!--jetcache缓存 -->
             <dependency>
                 <groupId>com.alicp.jetcache</groupId>
+                <artifactId>jetcache-autoconfigure</artifactId>
+                <version>${jetcache.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alicp.jetcache</groupId>
+                <artifactId>jetcache-redis-springdata</artifactId>
+                <version>${jetcache.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alicp.jetcache</groupId>
                 <artifactId>jetcache-starter-redis</artifactId>
+                <version>${jetcache.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alicp.jetcache</groupId>
+                <artifactId>jetcache-redis</artifactId>
                 <version>${jetcache.version}</version>
             </dependency>
             <!-- Hibernate JPA support. -->
@@ -393,7 +438,11 @@
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>3.3.0</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${pgsql-driver.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <distributionManagement>
@@ -408,4 +457,12 @@
             <url>http://mvn-repo.twinkle.net:9881/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
 </project>

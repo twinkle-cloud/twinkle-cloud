@@ -1,7 +1,6 @@
 package com.twinkle.cloud.security.authorization.service;
 
 import com.twinkle.cloud.security.authorization.entity.User;
-import org.springframework.cache.annotation.Cacheable;
 
 /**
  * Function: TODO ADD FUNCTION. <br/>
@@ -19,6 +18,5 @@ public interface UserService {
      * @param _id
      * @return
      */
-    @Cacheable(value = "#id")
     User getByUniqueId(String _id);
 }

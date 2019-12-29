@@ -1,10 +1,11 @@
 package com.twinkle.cloud.security.authorization.service.impl;
 
 import com.twinkle.cloud.security.authorization.entity.User;
-import com.twinkle.cloud.security.authorization.feign.OrganizationProvider;
+import com.twinkle.cloud.security.authorization.feign.UserMgmtProvider;
 import com.twinkle.cloud.security.authorization.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,10 +21,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    private OrganizationProvider organizationProvider;
+    private UserMgmtProvider userMgmtProvider;
 
+    @Cacheable(value = "#id")
     @Override
     public User getByUniqueId(String _id) {
-        return this.organizationProvider.getUserByUniqueId(_id).getData();
+        return this.userMgmtProvider.getUserByUniqueId(_id).getData();
     }
 }

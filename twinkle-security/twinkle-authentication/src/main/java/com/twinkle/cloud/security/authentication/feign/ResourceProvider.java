@@ -18,7 +18,7 @@ import java.util.Set;
  * @see
  * @since JDK 1.8
  */
-@FeignClient(name = "organization", fallback = ResourceProviderFallback.class)
+@FeignClient(name = "twinkle-usermgmt", fallback = ResourceProviderFallback.class)
 public interface ResourceProvider {
     /**
      * Get the resource list.

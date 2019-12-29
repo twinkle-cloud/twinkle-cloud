@@ -1,9 +1,6 @@
 
 server:
   port: 8761
-   
-logging:
-  path: /com.twinkle.cloud.common.asm.def.var/log/micro/baseplatform/
 
 management:
   endpoint:
@@ -14,9 +11,18 @@ management:
     health:
       enabled: true
 
+spring:
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
 ---
 spring:
   profiles: cloud
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
 eureka:
   server:
     waitTimeInMsWhenSyncEmpty: 0

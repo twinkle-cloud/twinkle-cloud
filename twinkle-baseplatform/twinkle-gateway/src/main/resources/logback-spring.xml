@@ -67,10 +67,19 @@
 	<logger name="swagger">
 		<level value="ERROR" />
 	</logger>
+	<logger name="reactor">
+		<level value="ERROR" />
+	</logger>
+	<logger name="io">
+		<level value="ERROR" />
+	</logger>
 	<logger name="javax">
 		<level value="ERROR" />
 	</logger>
 	<logger name="springfox">
+		<level value="ERROR" />
+	</logger>
+	<logger name="sun">
 		<level value="ERROR" />
 	</logger>
 	<logger name="com.sun">

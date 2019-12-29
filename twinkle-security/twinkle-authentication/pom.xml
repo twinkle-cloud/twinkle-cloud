@@ -15,22 +15,40 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.cloud</groupId>
+					<artifactId>spring-cloud-netflix-hystrix</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-security</artifactId>
 		</dependency>
+		<!--jetcache缓存 -->
 		<dependency>
 			<groupId>com.twinkle.cloud</groupId>
 			<artifactId>twinkle-common-cache</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.twinkle.cloud</groupId>
-			<artifactId>twinkle-common-mybatis</artifactId>
+			<artifactId>twinkle-common-utils</artifactId>
 		</dependency>
-		<!--jetcache缓存 -->
 		<dependency>
-			<groupId>com.alicp.jetcache</groupId>
-			<artifactId>jetcache-starter-redis</artifactId>
-		</dependency>
+			<groupId>com.twinkle.cloud</groupId>
+			<artifactId>twinkle-common-bus</artifactId>
+		</dependency><!--
+		<dependency>
+			<groupId>com.twinkle.cloud</groupId>
+			<artifactId>twinkle-common-mybatis</artifactId>
+		</dependency>-->
     </dependencies>
 
 	<build>
@@ -49,16 +67,24 @@
 			<plugin>
 				<groupId>com.google.cloud.tools</groupId>
 				<artifactId>jib-maven-plugin</artifactId>
-				<version>0.10.0</version>
+				<version>1.8.0</version>
 				<configuration>
 					<from>
-						<image>${docker.registry}jdk/openjdk:8-jre-alpine</image>
+						<image>${docker.registry}/jdk/openjdk:8-jre-alpine</image>
 					</from>
 					<to>
-						<image>${docker.registry}${docker.image.prefix}/${project.artifactId}:${kubeimage.version}</image>
+						<image>${docker.registry}/${docker.image.prefix}/${project.artifactId}:${kubeimage.version}</image>
 					</to>
 					<allowInsecureRegistries>true</allowInsecureRegistries>
 				</configuration>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>dockerBuild</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		<!-- <plugin>
 				<groupId>com.spotify</groupId>

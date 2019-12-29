@@ -18,12 +18,10 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-commons</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.twinkle.cloud</groupId>
             <artifactId>twinkle-common-utils</artifactId>
         </dependency>
-
         <!-- 通用mapper -->
         <dependency>
             <groupId>com.baomidou</groupId>

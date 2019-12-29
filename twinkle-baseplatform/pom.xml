@@ -9,8 +9,8 @@
 	</parent>
 	<artifactId>twinkle-baseplatform</artifactId>
 	<packaging>pom</packaging>
-	<name>Twinkle Cloud - Twinkle Baseplatforms.</name>
-	<description>Twinkle Cloud - Twinkle baseplatform components.</description>
+	<name>Twinkle Cloud - Twinkle BasePlatform Services</name>
+	<description>Twinkle Cloud - Twinkle BasePlatform Micro Services.</description>
 	<url>https://www.example.com</url>
 	<properties>
 		<project.uri>${project.baseUri}/../</project.uri>
@@ -36,18 +36,20 @@
 			</roles>
 			<timezone>+8</timezone>
 		</developer>
-	</developers>
+	</developers><!--
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
-	</dependencies>
+	</dependencies>-->
 
 	<modules>
 		<module>twinkle-discovery</module>
 		<module>twinkle-config-server</module>
+		<module>twinkle-gateway-admin</module>
 		<module>twinkle-gateway</module>
-		<module>twinkle-hystrix-dashboard</module>
+		<module>twinkle-redis</module><!--
+		<module>twinkle-hystrix-dashboard</module>-->
 	</modules>
 </project>

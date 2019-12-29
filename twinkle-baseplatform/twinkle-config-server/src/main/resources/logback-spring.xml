@@ -28,7 +28,7 @@
 
     <springProfile name="development">
         <logger name="com.twinkle.cloud">
-            <level value="DEBUG"/>
+            <level value="INFO"/>
             <appender-ref ref="LOGSTASH"/>
         </logger>
 
@@ -39,7 +39,7 @@
 
     <springProfile name="cloud">
         <logger name="com.twinkle.cloud">
-            <level value="DEBUG"/>
+            <level value="INFO"/>
             <appender-ref ref="LOGSTASH"/>
         </logger>
 

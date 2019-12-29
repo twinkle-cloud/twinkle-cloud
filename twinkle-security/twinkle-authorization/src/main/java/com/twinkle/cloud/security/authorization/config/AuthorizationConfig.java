@@ -74,7 +74,7 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         // 配置客户端信息，从数据库中读取，对应oauth_client_details表
-        clients.jdbc(dataSource);
+        clients.jdbc(this.dataSource);
     }
 
     @Override
@@ -85,8 +85,8 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
                 .approvalStore(approvalStore())
                 .exceptionTranslator(customExceptionTranslator())
                 .tokenEnhancer(tokenEnhancerChain())
-                .authenticationManager(authenticationManager)
-                .userDetailsService(userDetailsService)
+                .authenticationManager(this.authenticationManager)
+                .userDetailsService(this.userDetailsService)
                 //update by joe_chen add  granter
                 .tokenGranter(tokenGranter(endpoints));
 
@@ -109,7 +109,7 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
      */
     @Bean
     public ApprovalStore approvalStore() {
-        return new JdbcApprovalStore(dataSource);
+        return new JdbcApprovalStore(this.dataSource);
     }
 
     /**
@@ -120,7 +120,7 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     @Bean
     protected AuthorizationCodeServices authorizationCodeServices() {
         // 授权码存储等处理方式类，使用jdbc，操作oauth_code表
-        return new JdbcAuthorizationCodeServices(dataSource);
+        return new JdbcAuthorizationCodeServices(this.dataSource);
     }
 
     /**
@@ -167,7 +167,7 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     public TokenGranter tokenGranter(final AuthorizationServerEndpointsConfigurer endpoints) {
         List<TokenGranter> granters = Lists.newArrayList(endpoints.getTokenGranter());
         granters.add(new MobileTokenGranter(
-                authenticationManager,
+                this.authenticationManager,
                 endpoints.getTokenServices(),
                 endpoints.getClientDetailsService(),
                 endpoints.getOAuth2RequestFactory()));

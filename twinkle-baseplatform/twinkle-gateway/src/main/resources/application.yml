@@ -1,113 +1,95 @@
-
-
-#debug: true
-server:
-  port: 10000
-  tomcat:
-    uri-encoding: UTF-8
-  http2:
-    enabled: true
-
 spring:
-  aop:
-    proxy-target-class: true
-    encoding:
-      force: true
-      charset: UTF-8
-      enabled: true
-  cloud:
-    gateway:
-      discovery:
-        locator:
-          enabled: true
-      routes:
-      - id: auth
-        uri: lb://authserver
-        predicates:
-        - Path= ${server.servlet.context-path}/uaa/**
-        filters:
-        - StripPrefix= 1
-zuul:
-  host:
-    maxPerRouteConnections: 300
-  sensitive-headers: '' #Distribute headers cookies to children
-  add-proxy-headers: true
-  add-host-header: true
-  routes:
-    authserver:
-      path: /uaa/**
-      stripPrefix: false
-      #      url: http://${AUTH-SERVER_SERVICE_HOST}:${AUTH-SERVER_SERVICE_PORT}/uaa
-      serviceId: auth-server
-
-logging:
-  path: /com.twinkle.cloud.common.asm.def.var/log/micro/baseplatform/
-  level:
-    org.springframework: warn
-    org.springframework.security: error
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://${DISCOVERY_SERVICE_HOST}:${DISCOVERY_SERVICE_PORT}/eureka/
-  instance:
-    preferIpAddress: true
-
-ribbon:
-  ConnectTimeout: 600000
-  ReadTimeout: 600000
-  eureka:
-    enabled: true
-    ReadTimeout: 600000
-    MaxAutoRetries: 1
-
-hystrix:
-  command:
-    frontend:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 600000
-    admin:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 600000
-    marketplace:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 600000
-    default:
-      execution:
-        isolation:
-          strategy: SEMAPHORE
-          thread:
-            timeoutInMilliseconds: 600000
-
-proxy:
-  auth:
-    routes:
-      basis: oauth2
-
-security:
-#  sessions: NEVER #"security.sessions" setting means that Spring Security will accept cookies as authentication tokens but won't create them unless they already exist.
-  oauth2:
-    client:
-      client-id: saas-service
-      client-secret: secret
-      userAuthorizationUri: http://${AUTHSERVER_SERVICE_HOST}:${AUTHSERVER_SERVICE_PORT}/uaa/oauth/authorize
-      access-token-uri: http://${AUTHSERVER_SERVICE_HOST}:${AUTHSERVER_SERVICE_PORT}/uaa/oauth/token
-      grant-type: client_credentials
-    resource:
-      token-info-uri: http://${AUTHSERVER_SERVICE_HOST}:${AUTHSERVER_SERVICE_PORT}/uaa/user
-    authorization:
-      check-token-access: http://${AUTHSERVER_SERVICE_HOST}:${AUTHSERVER_SERVICE_PORT}/uaa/oauth/check_token
-
----
-spring:
-  profiles: dev
+  rabbitmq:
+    host: ${RABBIT_MQ_HOST:localhost}
+    port: ${RABBIT_MQ_PORT:5672}
+    username: ${RABBIT_MQ_USERNAME:guest}
+    password: ${RABBIT_MQ_PASSWORD:guest}
   redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:1qaz\!QAZ}
     lettuce:
       pool:
-        max-wait:
+        max-active: 300
+        max-idle: 8
+        max-wait: -1
+    #timeout: 5000
+  zipkin:
+    enabled: true
+    sender:
+      type: rabbit
+  sleuth:
+    enabled: true
+    http:
+      legacy:
+        enabled: true
+  #jwt密码
+  security:
+    oauth2:
+      jwt:
+        signingKey: 123456
+  cloud:
+    gateway:
+      default-filters:
+        - name: Retry
+          args:
+            retries: 3
+            statuses: BAD_GATEWAY
+        - AddResponseHeader=X-Response-Default-Foo, Default-Bar
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter.replenishRate: 2  #流速 每秒
+            redis-rate-limiter.burstCapacity: 10   #令牌桶的容积
+            rate-limiter: "#{@defaultRedisRateLimiter}"  #SPEL表达式去的对应的bean
+            key-resolver: "#{@apiKeyResolver}" #SPEL表达式去的对应的bean
+
+
+twinkle:
+  bus:
+    receiver:
+      exchange-name: spring-boot-exchange
+      routing-key: gateway-route
+      enable: true
+
+feign:
+  sentinel:
+    enabled: true
+  okhttp:
+    enabled: true
+
+jetcache:
+  statIntervalMinutes: 1
+  areaInCacheName: false
+  hidePackages: com.twinkle.cloud
+  local:
+    # 默认永久本地缓存
+    default:
+      type: caffeine
+      keyConvertor: fastjson
+  remote:
+    # 默认永久的远程缓存
+    default:
+      type: redis.springdata
+      keyConvertor: fastjson
+      valueEncoder: kryo
+      valueDecoder: kryo
+
+#网关白名单，无需要签权url
+gate:
+  ignore:
+    authentication:
+      startWith: /city,/oauth,/open,/v2/api-docs
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+logging:
+  level:
+    com.twinkle.cloud: debug
+    com.jalja.org.spring: debug
+  path: logs/
+  file:
+    max-size: 1GB

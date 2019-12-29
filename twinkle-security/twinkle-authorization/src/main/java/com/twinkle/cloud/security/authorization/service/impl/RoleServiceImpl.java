@@ -1,7 +1,7 @@
 package com.twinkle.cloud.security.authorization.service.impl;
 
 import com.twinkle.cloud.security.authorization.entity.Role;
-import com.twinkle.cloud.security.authorization.feign.OrganizationProvider;
+import com.twinkle.cloud.security.authorization.feign.UserMgmtProvider;
 import com.twinkle.cloud.security.authorization.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,10 +20,10 @@ import java.util.Set;
 @Service
 public class RoleServiceImpl implements RoleService {
     @Autowired
-    private OrganizationProvider organizationProvider;
+    private UserMgmtProvider userMgmtProvider;
 
     @Override
     public Set<Role> queryUserRolesByUserId(String _userId) {
-        return organizationProvider.queryRolesByUserId(_userId).getData();
+        return userMgmtProvider.queryRolesByUserId(_userId).getData();
     }
 }

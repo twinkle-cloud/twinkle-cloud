@@ -48,6 +48,8 @@
         <module>twinkle-common-data</module>
         <module>twinkle-common-utils</module>
         <module>twinkle-common-cache</module>
+        <module>twinkle-common-bus</module>
         <module>twinkle-common-mybatis</module>
+        <module>twinkle-common-web</module>
     </modules>
 </project>

@@ -43,7 +43,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         //获取用户认证信息
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         //获取此url，method访问对应的权限资源信息
-        ConfigAttribute urlConfigAttribute = resourceService.findConfigAttributesByUrl(authRequest);
+        ConfigAttribute urlConfigAttribute = this.resourceService.findConfigAttributesByUrl(authRequest);
         if (NONEXISTENT_URL.equals(urlConfigAttribute.getAttribute()))
             log.debug("The URL[{}] does not exist in the resource pool, so the access will be denied.", authRequest.getRequestURI());
         //获取此访问用户所有角色拥有的权限资源
@@ -71,7 +71,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
      */
     private Set<Resource> findResourcesByUsername(String _userName) {
         //用户被授予的角色资源
-        Set<Resource> resources = resourceService.queryByUsername(_userName);
+        Set<Resource> resources = this.resourceService.queryByUsername(_userName);
         if (log.isDebugEnabled()) {
             log.debug("The resources' size granted to this user [{}] is:{}, details:{}", _userName, resources.size(), resources);
         }

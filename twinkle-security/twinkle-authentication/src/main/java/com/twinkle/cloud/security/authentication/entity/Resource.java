@@ -1,7 +1,9 @@
 package com.twinkle.cloud.security.authentication.entity;
 
-import com.twinkle.cloud.common.mybatis.entity.po.BasePo;
 import lombok.Data;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Function: TODO ADD FUNCTION. <br/>
@@ -13,11 +15,15 @@ import lombok.Data;
  * @since JDK 1.8
  */
 @Data
-public class Resource extends BasePo {
+public class Resource implements Serializable {
     private String code;
     private String name;
     private String type;
     private String url;
     private String method;
     private String description;
+    private String id;
+    private String creatorId;
+    private Date createDate;
+    private Date updateDate;
 }
