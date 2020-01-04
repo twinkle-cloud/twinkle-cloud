@@ -39,74 +39,19 @@
 	</developers>
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<!--服务链路追踪
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-sleuth</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-zipkin</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-stream-binder-rabbit</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-		</dependency>-->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-hateoas</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-aop</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-pool2</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.modelmapper</groupId>
-			<artifactId>modelmapper</artifactId>
+			<groupId>com.twinkle.cloud</groupId>
+			<artifactId>twinkle-common-cache</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.twinkle.cloud</groupId>
-			<artifactId>twinkle-common-data</artifactId>
+			<artifactId>twinkle-common-web</artifactId>
 		</dependency>
-		<dependency>
-				<groupId>com.twinkle.cloud</groupId>
-				<artifactId>twinkle-common-utils</artifactId>
-		</dependency><!--
-		<dependency>
-				<groupId>com.twinkle.cloud</groupId>
-				<artifactId>twinkle-common-security</artifactId>
-		</dependency>-->
 
 	</dependencies>
 	<modules>
-		<module>twinkle-sysbase-mgmt</module>
 		<module>twinkle-user-mgmt</module>
-		<module>twinkle-ium</module>
+		<!--
+		<module>twinkle-sysbase-mgmt</module>
+		<module>twinkle-ium</module>-->
   </modules>
 </project>

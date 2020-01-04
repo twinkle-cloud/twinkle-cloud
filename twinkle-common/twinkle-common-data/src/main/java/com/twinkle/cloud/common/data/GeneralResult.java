@@ -1,11 +1,13 @@
 package com.twinkle.cloud.common.data;
 
 import com.twinkle.cloud.common.constant.ResultCode;
-import com.twinkle.cloud.common.exception.BaseException;
+import com.twinkle.cloud.common.exception.GeneralException;
 import com.twinkle.cloud.common.exception.ErrorType;
 import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.io.Serializable;
 
 /**
  * Function: TODO ADD FUNCTION. <br/>
@@ -17,20 +19,21 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @since JDK 1.8
  */
 @Data
-public class GeneralResult<T> {
-    private String code;
+public class GeneralResult<T> implements Serializable {
+    private Serializable code;
     private T data;
     private String description;
     public GeneralResult() {
     }
-    public GeneralResult(String _resultCode) {
+    public GeneralResult(Serializable _resultCode) {
         this.code = _resultCode;
     }
-    public GeneralResult(String _resultCode, T _data) {
+
+    public GeneralResult(Serializable _resultCode, T _data) {
         this.code = _resultCode;
         this.data = _data;
     }
-    public GeneralResult(String _resultCode, T _data, String _description) {
+    public GeneralResult(Serializable _resultCode, T _data, String _description) {
         this.code = _resultCode;
         this.data = _data;
         this.description = _description;
@@ -43,7 +46,7 @@ public class GeneralResult<T> {
      * @return GeneralContentResult
      */
     public static GeneralResult success(Object _data) {
-        return new GeneralResult<>(ResultCode.OPERATION_SUCCESS, _data);
+        return new GeneralResult<Object>(ResultCode.OPERATION_SUCCESS, _data);
     }
 
     /**
@@ -70,7 +73,7 @@ public class GeneralResult<T> {
      * @param _exception
      * @return Result
      */
-    public static GeneralResult fail(BaseException _exception) {
+    public static GeneralResult fail(GeneralException _exception) {
         return fail(_exception, null);
     }
 
@@ -80,7 +83,7 @@ public class GeneralResult<T> {
      * @param _data
      * @return GeneralContentResult
      */
-    public static GeneralResult fail(BaseException _exception, Object _data) {
+    public static GeneralResult fail(GeneralException _exception, Object _data) {
         return new GeneralResult<>(_exception.getCode(), _data);
     }
 

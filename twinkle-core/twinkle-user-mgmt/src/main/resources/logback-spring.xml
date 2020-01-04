@@ -65,15 +65,36 @@
 	</root>
 
 	<logger name="com.zaxxer">
-		<level value="ERROR" />
+		<level value="WARN" />
 	</logger>
 	<logger name="javax">
 		<level value="ERROR" />
+	</logger>
+	<logger name="com.alicp">
+		<level value="WARN" />
+	</logger>
+	<logger name="org.mybatis">
+		<level value="WARN" />
+	</logger>
+	<logger name="org.postgresql">
+		<level value="WARN" />
+	</logger>
+	<logger name="reactor">
+		<level value="ERROR" />
+	</logger>
+	<logger name="io">
+		<level value="ERROR" />
+	</logger>
+	<logger name="com.baomidou">
+		<level value="WARN" />
 	</logger>
 	<logger name="com.sun">
 		<level value="ERROR" />
 	</logger>
 	<logger name="sun">
+		<level value="ERROR" />
+	</logger>
+	<logger name="swagger">
 		<level value="ERROR" />
 	</logger>
 	<logger name="springfox">

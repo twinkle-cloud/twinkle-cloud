@@ -2,7 +2,7 @@ package com.twinkle.cloud.common.mybatis.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.twinkle.cloud.common.context.UserContextHolder;
-import com.twinkle.cloud.common.mybatis.entity.po.BasePo;
+import com.twinkle.cloud.common.mybatis.entity.BaseEntity;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.reflection.MetaObject;
 
@@ -25,19 +25,19 @@ public class PoMetaObjectHandler implements MetaObjectHandler {
      * @return
      */
     private String getCurrentUsername() {
-        return StringUtils.defaultIfBlank(UserContextHolder.getInstance().getUsername(), BasePo.DEFAULT_USERNAME);
+        return StringUtils.defaultIfBlank(UserContextHolder.getInstance().getUsername(), BaseEntity.DEFAULT_USERNAME);
     }
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        this.setInsertFieldValByName("createdBy", getCurrentUsername(), metaObject);
-        this.setInsertFieldValByName("createdTime", Date.from(ZonedDateTime.now().toInstant()), metaObject);
+        this.setInsertFieldValByName("creatorId", getCurrentUsername(), metaObject);
+        this.setInsertFieldValByName("createDate", Date.from(ZonedDateTime.now().toInstant()), metaObject);
         this.updateFill(metaObject);
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        this.setUpdateFieldValByName("updatedBy", getCurrentUsername(), metaObject);
-        this.setUpdateFieldValByName("updatedTime", Date.from(ZonedDateTime.now().toInstant()), metaObject);
+//        this.setUpdateFieldValByName("updatedBy", getCurrentUsername(), metaObject);
+        this.setUpdateFieldValByName("updateDate", Date.from(ZonedDateTime.now().toInstant()), metaObject);
     }
 }

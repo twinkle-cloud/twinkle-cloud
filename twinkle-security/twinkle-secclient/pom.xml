@@ -19,8 +19,16 @@
 			<artifactId>lombok</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security.oauth.boot</groupId>
+			<artifactId>spring-security-oauth2-autoconfigure</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.twinkle.cloud</groupId>
-			<artifactId>twinkle-common-utils</artifactId>
+			<artifactId>twinkle-common-web</artifactId>
 		</dependency>
         <dependency>
             <groupId>com.alibaba</groupId>

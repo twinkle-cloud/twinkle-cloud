@@ -37,8 +37,8 @@ public class EventSender {
         this.rabbitTemplate.setMessageConverter(this.messageConverter);
     }
 
-    public void send(String routingKey, Object object) {
-        log.info("routingKey:{}=>message:{}", routingKey, object);
-        this.rabbitTemplate.convertAndSend(this.busSenderConfiguration.getExchangeName(), routingKey, object);
+    public void send(String _routingKey, Object _object) {
+        log.info("routingKey:{}=>message:{}", _routingKey, _object);
+        this.rabbitTemplate.convertAndSend(this.busSenderConfiguration.getExchangeName(), _routingKey, _object);
     }
 }

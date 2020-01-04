@@ -14,8 +14,8 @@
         <module>twinkle-common</module>
         <module>twinkle-security</module>
         <module>twinkle-baseplatform</module>
-        <!--<module>twinkle-core</module>
-        <module>twinkle-composite</module>
+        <module>twinkle-core</module>
+        <!--<module>twinkle-composite</module>
         <module>twinkle-api</module>-->
     </modules>
 
@@ -284,6 +284,11 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-text</artifactId>
                 <version>1.6</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>5.1.0</version>
             </dependency>
             <dependency>
                 <groupId>com.google.guava</groupId>

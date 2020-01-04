@@ -2,7 +2,7 @@ package com.twinkle.cloud.core.usermgmt.controller;
 
 import com.twinkle.cloud.common.constant.ResultCode;
 import com.twinkle.cloud.common.data.GeneralResult;
-import com.twinkle.cloud.core.usermgmt.data.HelloRequest;
+import com.twinkle.cloud.core.usermgmt.entity.HelloRequest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

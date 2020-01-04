@@ -23,7 +23,7 @@ public class RoleServiceImpl implements RoleService {
     private UserMgmtProvider userMgmtProvider;
 
     @Override
-    public Set<Role> queryUserRolesByUserId(String _userId) {
+    public Set<Role> queryUserRolesByUserId(Long _userId) {
         return userMgmtProvider.queryRolesByUserId(_userId).getData();
     }
 }

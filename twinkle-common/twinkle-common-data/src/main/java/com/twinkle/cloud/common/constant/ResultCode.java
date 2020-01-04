@@ -20,11 +20,11 @@ package com.twinkle.cloud.common.constant;
  * @since JDK 1.8
  * @see
  */
-public class ResultCode {
+public interface ResultCode {
 	/**
 	 * OPERATION_SUCCESS: for all of the successful operations.
 	 */
-	public final static String OPERATION_SUCCESS = "100";
+	Integer OPERATION_SUCCESS = 100;
 	/**
 	 * 11002001 = "11" || "002" || "001"
 	 *
@@ -36,22 +36,22 @@ public class ResultCode {
 	 * "001" FOR THE ERROR CODE FOR EACH EXCEPTION
 	 *
 	 */
-	public final static String OPERATION_FAILED_UNKOWN = "101";
-	public final static String ORG_USER_RETRIEVE_FAILED = "10002001";
+	Integer OPERATION_FAILED_UNKOWN = 101;
+	Integer ORG_USER_RETRIEVE_FAILED = 10002001;
 
-	public final static String PLATFORMACCESS_UNEXPECTED_EXCEPTION = "10006001";
+	Integer PLATFORMACCESS_UNEXPECTED_EXCEPTION = 10006001;
 
-    public final static String PLATFORMACCESS_RPC_FAILED = "10006002";
+	Integer PLATFORMACCESS_RPC_FAILED = 10006002;
 
-    public final static String PLATFORMACCESS_SYNC_FAILED = "10006003";
-    
-    public final static String PLATFORMACCESS_QUOTA_VALIDATE_FAILED = "10006004";
+	Integer PLATFORMACCESS_SYNC_FAILED = 10006003;
 
-	public final static String USERMGMT_UNEXPECTED_EXCEPTION = "10001001";
+	Integer PLATFORMACCESS_QUOTA_VALIDATE_FAILED = 10006004;
 
-	public final static String USERMGMT_USER_NOT_FOUND = "10001002";
-	
-	public final static String USERMGMT_ORG_EXISTED = "10001003";
+	Integer USERMGMT_UNEXPECTED_EXCEPTION = 10001001;
 
-	public final static String USERMGMT_USER_EXISTED = "10001004";
+	Integer USERMGMT_USER_NOT_FOUND = 10001002;
+
+	Integer USERMGMT_ORG_EXISTED = 10001003;
+
+	Integer USERMGMT_USER_EXISTED = 10001004;
 }

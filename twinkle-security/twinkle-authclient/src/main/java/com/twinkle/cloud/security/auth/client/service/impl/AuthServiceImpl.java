@@ -48,7 +48,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public GeneralResult<Boolean> authenticate(String authentication, String url, String method) {
-        return authProvider.auth(authentication, url, method);
+        return this.authProvider.auth(authentication, url, method);
     }
 
     @Override

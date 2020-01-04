@@ -1,6 +1,6 @@
 package com.twinkle.cloud.gateway.admin.entity.po;
 
-import com.twinkle.cloud.common.mybatis.entity.po.BasePo;
+import com.twinkle.cloud.common.mybatis.entity.BaseEntity;
 import lombok.*;
 
 /**
@@ -17,7 +17,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TGatewayRoute extends BasePo {
+public class TGatewayRoute extends BaseEntity {
     private String uri;
     private String routeId;
     private String predicates;

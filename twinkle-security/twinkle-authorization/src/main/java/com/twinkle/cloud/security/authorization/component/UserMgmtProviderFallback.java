@@ -26,7 +26,7 @@ public class UserMgmtProviderFallback implements UserMgmtProvider {
     }
 
     @Override
-    public GeneralResult<Set<Role>> queryRolesByUserId(String userId) {
+    public GeneralResult<Set<Role>> queryRolesByUserId(Long userId) {
         return GeneralResult.success(new HashSet<Role>());
     }
 

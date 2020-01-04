@@ -78,18 +78,10 @@ jetcache:
 gate:
   ignore:
     authentication:
-      startWith: /city,/oauth,/open,/v2/api-docs
+      startWith: /noauth,/oauth,/open,/v2/api-docs
 
 management:
   endpoints:
     web:
       exposure:
         include: '*'
-
-logging:
-  level:
-    com.twinkle.cloud: debug
-    com.jalja.org.spring: debug
-  path: logs/
-  file:
-    max-size: 1GB

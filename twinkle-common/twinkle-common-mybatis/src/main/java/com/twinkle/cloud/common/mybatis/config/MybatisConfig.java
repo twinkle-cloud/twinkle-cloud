@@ -1,5 +1,7 @@
 package com.twinkle.cloud.common.mybatis.config;
 
+import com.baomidou.mybatisplus.core.injector.DefaultSqlInjector;
+import com.baomidou.mybatisplus.core.injector.ISqlInjector;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +23,14 @@ import javax.sql.DataSource;
 @Configuration
 @ConditionalOnBean(DataSource.class)
 public class MybatisConfig {
+    /**
+     * 初使化Mybatis审计字段自动赋值的interceptor
+     */
+    @Bean
+    public ISqlInjector sqlInjector() {
+        return new DefaultSqlInjector();
+    }
+
     /**
      * Paging Plugin.
      *

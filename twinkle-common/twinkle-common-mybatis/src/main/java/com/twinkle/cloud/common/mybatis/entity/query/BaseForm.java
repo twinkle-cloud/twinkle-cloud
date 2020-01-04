@@ -1,10 +1,12 @@
 package com.twinkle.cloud.common.mybatis.entity.query;
 
-import com.twinkle.cloud.common.mybatis.entity.po.BasePo;
+import com.twinkle.cloud.common.mybatis.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+
+import java.io.Serializable;
 
 /**
  * Function: TODO ADD FUNCTION. <br/>
@@ -18,11 +20,11 @@ import org.springframework.beans.BeanUtils;
 @ApiModel
 @Slf4j
 @Data
-public class BaseForm<T extends BasePo> {
+public class BaseForm<E extends BaseEntity> {
     /**
      * 用户名
      */
-    private String username;
+//    private String username;
 
     /**
      * From转化为Po，进行后续业务处理
@@ -30,10 +32,10 @@ public class BaseForm<T extends BasePo> {
      * @param clazz
      * @return
      */
-    public T toPo(Class<T> clazz) {
-        T t = BeanUtils.instantiateClass(clazz);
-        BeanUtils.copyProperties(this, t);
-        return t;
+    public E toPo(Class<E> clazz) {
+        E e = BeanUtils.instantiateClass(clazz);
+        BeanUtils.copyProperties(this, e);
+        return e;
     }
 
     /**
@@ -43,10 +45,10 @@ public class BaseForm<T extends BasePo> {
      * @param clazz
      * @return
      */
-    public T toPo(String id, Class<T> clazz) {
-        T t = BeanUtils.instantiateClass(clazz);
-        t.setId(id);
-        BeanUtils.copyProperties(this, t);
-        return t;
+    public E toPo(Serializable id, Class<E> clazz) {
+        E e = BeanUtils.instantiateClass(clazz);
+        e.setId(id);
+        BeanUtils.copyProperties(this, e);
+        return e;
     }
 }

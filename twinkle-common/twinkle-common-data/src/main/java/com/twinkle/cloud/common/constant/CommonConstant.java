@@ -18,19 +18,29 @@ package com.twinkle.cloud.common.constant;
  * @see
  * @since JDK 1.8
  */
-public class CommonConstant {
-    public final static Byte DIC_REGION_ADMIN = 0;
-    public final static Byte DIC_REGION_VIRTAUL = 1;
-    public final static Byte DIC_GLOBAL_STATUS_INITIAL = 0;
-    public final static Byte DIC_GLOBAL_STATUS_ENABLE = 1;
-    public final static Byte DIC_GLOBAL_STATUS_SUSPEND = 2;
-    public final static Byte DIC_GLOBAL_STATUS_CANCELLED = 3;
-    public final static Byte DIC_GLOBAL_STATUS_DELETED = 4;
-    public final static Byte DIC_GLOBAL_STATUS_DISABLE = 5;
+public interface CommonConstant {
+    Byte DIC_REGION_ADMIN = 0;
+    Byte DIC_REGION_VIRTAUL = 1;
+    Byte DIC_GLOBAL_STATUS_INITIAL = 0;
+    Byte DIC_GLOBAL_STATUS_ENABLE = 1;
+    Byte DIC_GLOBAL_STATUS_SUSPEND = 2;
+    Byte DIC_GLOBAL_STATUS_CANCELLED = 3;
+    Byte DIC_GLOBAL_STATUS_DELETED = 4;
+    Byte DIC_GLOBAL_STATUS_DISABLE = 5;
 
-    public final static Byte DIC_USER_TYPE_VY_ADMIN = 0;
-    public final static Byte DIC_USER_TYPE_TENANT_ADMIN = 1;
-    public final static Byte DIC_USER_TYPE_TENANT_USER = 2;
+    Byte DIC_USER_TYPE_VY_ADMIN = 0;
+    Byte DIC_USER_TYPE_TENANT_ADMIN = 1;
+    Byte DIC_USER_TYPE_TENANT_USER = 2;
 
 
+
+    /**
+     * 编码
+     */
+    String UTF8 = "UTF-8";
+
+    /**
+     * JSON 资源
+     */
+    String CONTENT_TYPE = "application/json; charset=utf-8";
 }

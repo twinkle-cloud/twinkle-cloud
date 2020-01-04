@@ -57,9 +57,10 @@ public class AccessGatewayFilter implements GlobalFilter {
         String tempAuthen = tempRequest.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         String tempMethod = tempRequest.getMethodValue();
         String tempURL = tempRequest.getPath().value();
-        log.debug("URL:{},method:{},headers:{}", tempURL, tempMethod, tempRequest.getHeaders());
+        log.debug("Received Request: URL:{},method:{},headers:{}", tempURL, tempMethod, tempRequest.getHeaders());
         //不需要网关签权的url
         if (this.authService.ignoreAuthentication(tempURL)) {
+            log.debug("The request is NoAuth required, so dismiss the auth.");
             return _chain.filter(_exchange);
         }
 
@@ -70,8 +71,10 @@ public class AccessGatewayFilter implements GlobalFilter {
             builder.header(X_CLIENT_TOKEN, "TODO zhoutaoo添加服务间简单认证");
             //将jwt token中的用户信息传给服务
             builder.header(X_CLIENT_TOKEN_USER, getUserToken(tempAuthen));
+            log.debug("The request is Auth required, and passed the auth, so go to next filter.");
             return _chain.filter(_exchange.mutate().request(builder.build()).build());
         }
+        log.debug("The request is Auth required, but auth failed.");
         return unauthorized(_exchange);
     }
 

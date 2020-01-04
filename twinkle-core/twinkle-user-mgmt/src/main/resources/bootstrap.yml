@@ -1,9 +1,40 @@
+server:
+  port: 8010
 
 spring:
   application:
-    name: user-mgmt
+    name: @artifactId@
+
+---
+spring:
+  profiles: cloud
+  application:
+    name: @artifactId@
   cloud:
     config:
+      name: @artifactId@
       uri: http://${CONFIGSERVER_SERVICE_HOST}:${CONFIGSERVER_SERVICE_PORT}
-encrypt:
-  failOnError: false
+      label: master
+      profile: cloud
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${DISCOVERY_SERVICE_HOST}:${DISCOVERY_SERVICE_PORT}/eureka/
+  instance:
+    preferIpAddress: true
+
+---
+spring:
+  profiles: nacos-cloud
+  application:
+    name: @artifactId@
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS-HOST:pig-register}:${NACOS-PORT:8848}
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        file-extension: yml
+        shared-dataids: application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+
+

@@ -20,5 +20,5 @@ public interface RoleService {
      * @param _userId
      * @return
      */
-    Set<Role> queryUserRolesByUserId(String _userId);
+    Set<Role> queryUserRolesByUserId(Long _userId);
 }

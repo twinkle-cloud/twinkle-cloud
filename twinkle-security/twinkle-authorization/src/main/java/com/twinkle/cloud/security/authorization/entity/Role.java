@@ -1,6 +1,6 @@
 package com.twinkle.cloud.security.authorization.entity;
 
-import com.twinkle.cloud.common.mybatis.entity.po.BasePo;
+import com.twinkle.cloud.common.mybatis.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 @EqualsAndHashCode(callSuper = false )
 @NoArgsConstructor
-public class Role extends BasePo {
+public class Role extends BaseEntity {
     private String code;
     private String name;
     private String description;

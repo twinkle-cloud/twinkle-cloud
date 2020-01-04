@@ -30,6 +30,13 @@ spring:
       retry:
         enabled: true
 
+twinkle:
+  bus:
+    receiver:
+      exchange-name: spring-boot-exchange
+      routing-key: user-resource
+      enable: true
+
 feign:
   sentinel:
     enabled: true
