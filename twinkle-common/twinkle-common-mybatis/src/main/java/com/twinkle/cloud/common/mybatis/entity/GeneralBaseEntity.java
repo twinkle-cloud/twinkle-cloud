@@ -1,11 +1,8 @@
 package com.twinkle.cloud.common.mybatis.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-
-import java.io.Serializable;
+import lombok.*;
 
 /**
  * Function: TODO ADD FUNCTION. <br/>
@@ -16,6 +13,7 @@ import java.io.Serializable;
  * @see
  * @since JDK 1.8
  */
+@Data
 public class GeneralBaseEntity extends BaseEntity {
     @TableField(fill = FieldFill.INSERT)
     private String creatorId;

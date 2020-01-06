@@ -1,9 +1,9 @@
 package com.twinkle.cloud.core.usermgmt.controller;
 
 import com.twinkle.cloud.common.data.GeneralResult;
-import com.twinkle.cloud.core.usermgmt.entity.form.MenuForm;
-import com.twinkle.cloud.core.usermgmt.entity.form.MenuQueryForm;
-import com.twinkle.cloud.core.usermgmt.entity.param.MenuQueryParam;
+import com.twinkle.cloud.core.usermgmt.entity.dto.MenuRequest;
+import com.twinkle.cloud.core.usermgmt.entity.query.MenuPageQuery;
+import com.twinkle.cloud.core.usermgmt.entity.query.MenuQuery;
 import com.twinkle.cloud.core.usermgmt.entity.Menu;
 import com.twinkle.cloud.core.usermgmt.service.MenuService;
 import io.swagger.annotations.*;
@@ -32,7 +32,7 @@ public class MenuController {
     @ApiOperation(value = "新增菜单", notes = "新增一个菜单")
     @ApiImplicitParam(name = "menuForm", value = "新增菜单form表单", required = true, dataType = "MenuForm")
     @PostMapping(value = "/authsec/menu")
-    public GeneralResult add(@Valid @RequestBody MenuForm _menu) {
+    public GeneralResult add(@Valid @RequestBody MenuRequest _menu) {
         log.debug("name:{}", _menu);
         Menu tempMenu = _menu.toPo(Menu.class);
         return GeneralResult.success(this.menuService.add(tempMenu));
@@ -51,7 +51,7 @@ public class MenuController {
             @ApiImplicitParam(name = "_menu", value = "菜单实体", required = true, dataType = "MenuForm")
     })
     @PutMapping(value = "/authsec/menu/{_id}")
-    public GeneralResult update(@PathVariable String _id, @Valid @RequestBody MenuForm _menu) {
+    public GeneralResult update(@PathVariable String _id, @Valid @RequestBody MenuRequest _menu) {
         Menu tempMenu = _menu.toPo(Menu.class);
         tempMenu.setId(_id);
         return GeneralResult.success(this.menuService.update(tempMenu));
@@ -73,7 +73,7 @@ public class MenuController {
     @GetMapping(value = "/authsec/menu")
     public GeneralResult query(@RequestParam(value = "_name", required = false) String _name) {
         log.debug("Query with name:{}", _name);
-        MenuQueryParam tempMenuParam = new MenuQueryParam();
+        MenuQuery tempMenuParam = new MenuQuery();
         tempMenuParam.setName(_name);
         return GeneralResult.success(this.menuService.query(tempMenuParam));
     }
@@ -84,9 +84,9 @@ public class MenuController {
             @ApiResponse(code = 100, message = "处理成功", response = GeneralResult.class)
     )
     @PostMapping(value = "/authsec/menu/conditions")
-    public GeneralResult search(@Valid @RequestBody MenuQueryForm _condition) {
+    public GeneralResult search(@Valid @RequestBody MenuPageQuery _condition) {
         log.debug("search with menuQueryForm:{}", _condition);
-        return GeneralResult.success(this.menuService.query(_condition.toParam(MenuQueryParam.class)));
+        return GeneralResult.success(this.menuService.query(_condition.toParam(MenuQuery.class)));
     }
 
     @ApiOperation(value = "根据父id查询菜单", notes = "根据父id查询菜单列表")

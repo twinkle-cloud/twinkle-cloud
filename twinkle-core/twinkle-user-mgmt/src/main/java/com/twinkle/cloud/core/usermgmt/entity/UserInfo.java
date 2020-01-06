@@ -42,6 +42,11 @@ public class UserInfo extends BaseEntity {
      * Mail Address.
      */
     private String eMail;
+
+    /**
+     * Org ID which belongs to.
+     */
+    private Integer orgId;
     /**
      * The status.
      */

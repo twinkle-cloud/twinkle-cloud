@@ -132,7 +132,9 @@ public interface SecurityConstant {
 	/**
 	 * 用户名字段
 	 */
-	String DETAILS_USERNAME = "username";
+	String DETAILS_USERNAME = "login_name";
+
+	String DETAILS_TENANT_ID = "tenant_id";
 
 	/**
 	 * 用户部门字段

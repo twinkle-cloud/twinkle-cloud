@@ -1,11 +1,11 @@
 package com.twinkle.cloud.gateway.admin.controller;
 
 import com.twinkle.cloud.common.data.GeneralResult;
-import com.twinkle.cloud.gateway.admin.entity.form.GatewayRouteForm;
-import com.twinkle.cloud.gateway.admin.entity.form.GatewayRouteQueryForm;
-import com.twinkle.cloud.gateway.admin.entity.ov.GatewayRouteVo;
-import com.twinkle.cloud.gateway.admin.entity.param.GatewayRouteQueryParam;
-import com.twinkle.cloud.gateway.admin.entity.po.TGatewayRoute;
+import com.twinkle.cloud.gateway.admin.entity.dto.GatewayRouteRequest;
+import com.twinkle.cloud.gateway.admin.entity.query.GatewayRoutePageQuery;
+import com.twinkle.cloud.gateway.admin.entity.otd.GatewayRouteResponse;
+import com.twinkle.cloud.gateway.admin.entity.query.GatewayRouteQuery;
+import com.twinkle.cloud.gateway.admin.entity.TGatewayRoute;
 import com.twinkle.cloud.gateway.admin.service.GatewayRouteService;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +34,7 @@ public class GatewayRouteController {
     @ApiOperation(value = "新增网关路由", notes = "新增一个网关路由")
     @ApiImplicitParam(name = "gatewayRoutForm", value = "新增网关路由form表单", required = true, dataType = "GatewayRouteForm")
     @PostMapping
-    public GeneralResult add(@Valid @RequestBody GatewayRouteForm gatewayRoutForm) {
+    public GeneralResult add(@Valid @RequestBody GatewayRouteRequest gatewayRoutForm) {
         log.info("name:", gatewayRoutForm);
         TGatewayRoute gatewayRout = gatewayRoutForm.toPo(TGatewayRoute.class);
         return GeneralResult.success(gatewayRoutService.add(gatewayRout));
@@ -53,7 +53,7 @@ public class GatewayRouteController {
             @ApiImplicitParam(name = "gatewayRoutForm", value = "网关路由实体", required = true, dataType = "GatewayRouteForm")
     })
     @PutMapping(value = "/{id}")
-    public GeneralResult update(@PathVariable String id, @Valid @RequestBody GatewayRouteForm gatewayRoutForm) {
+    public GeneralResult update(@PathVariable String id, @Valid @RequestBody GatewayRouteRequest gatewayRoutForm) {
         TGatewayRoute gatewayRout = gatewayRoutForm.toPo(TGatewayRoute.class);
         gatewayRout.setId(id);
         return GeneralResult.success(gatewayRoutService.update(gatewayRout));
@@ -64,7 +64,7 @@ public class GatewayRouteController {
     @GetMapping(value = "/{id}")
     public GeneralResult get(@PathVariable String id) {
         log.info("get with id:{}", id);
-        return GeneralResult.success(new GatewayRouteVo(gatewayRoutService.get(id)));
+        return GeneralResult.success(new GatewayRouteResponse(gatewayRoutService.get(id)));
     }
 
     @ApiOperation(value = "根据uri获取网关路由", notes = "根据uri获取网关路由信息，简单查询")
@@ -74,7 +74,7 @@ public class GatewayRouteController {
     )
     @GetMapping
     public GeneralResult getByUri(@RequestParam String uri) {
-        return GeneralResult.success(gatewayRoutService.query(new GatewayRouteQueryParam(uri)).stream().findFirst());
+        return GeneralResult.success(gatewayRoutService.query(new GatewayRouteQuery(uri)).stream().findFirst());
     }
 
     @ApiOperation(value = "搜索网关路由", notes = "根据条件查询网关路由信息")
@@ -83,8 +83,8 @@ public class GatewayRouteController {
             @ApiResponse(code = 200, message = "处理成功", response = GeneralResult.class)
     )
     @PostMapping(value = "/conditions")
-    public GeneralResult search(@Valid @RequestBody GatewayRouteQueryForm gatewayRouteQueryForm) {
-        return GeneralResult.success(gatewayRoutService.query(gatewayRouteQueryForm.toParam(GatewayRouteQueryParam.class)));
+    public GeneralResult search(@Valid @RequestBody GatewayRoutePageQuery gatewayRouteQueryForm) {
+        return GeneralResult.success(gatewayRoutService.query(gatewayRouteQueryForm.toParam(GatewayRouteQuery.class)));
     }
 
     @ApiOperation(value = "重载网关路由", notes = "将所以网关的路由全部重载到redis中")

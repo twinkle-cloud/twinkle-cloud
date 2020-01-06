@@ -1,9 +1,9 @@
 package com.twinkle.cloud.core.usermgmt.controller;
 
 import com.twinkle.cloud.common.data.GeneralResult;
-import com.twinkle.cloud.core.usermgmt.entity.form.OrganizationForm;
-import com.twinkle.cloud.core.usermgmt.entity.form.OrganizationQueryForm;
-import com.twinkle.cloud.core.usermgmt.entity.param.OrganizationQueryParam;
+import com.twinkle.cloud.core.usermgmt.entity.dto.OrganizationRequest;
+import com.twinkle.cloud.core.usermgmt.entity.query.OrganizationPageQuery;
+import com.twinkle.cloud.core.usermgmt.entity.query.OrganizationQuery;
 import com.twinkle.cloud.core.usermgmt.entity.Organization;
 import com.twinkle.cloud.core.usermgmt.service.OrganizationService;
 import io.swagger.annotations.*;
@@ -32,7 +32,7 @@ public class OrganizationController {
     @ApiOperation(value = "新增组织机构", notes = "新增一个组织机构")
     @ApiImplicitParam(name = "_org", value = "新增组织机构form表单", required = true, dataType = "OrganizationForm")
     @PostMapping(value = "/authsec/organization")
-    public GeneralResult add(@Valid @RequestBody OrganizationForm _org) {
+    public GeneralResult add(@Valid @RequestBody OrganizationRequest _org) {
         log.debug("Name:{}", _org);
         return GeneralResult.success(organizationService.add(_org.toPo(Organization.class)));
     }
@@ -50,7 +50,7 @@ public class OrganizationController {
             @ApiImplicitParam(name = "_org", value = "组织机构实体", required = true, dataType = "OrganizationForm")
     })
     @PutMapping(value = "/authsec/organization/{_id}")
-    public GeneralResult update(@PathVariable String _id, @Valid @RequestBody OrganizationForm _org) {
+    public GeneralResult update(@PathVariable String _id, @Valid @RequestBody OrganizationRequest _org) {
         Organization tempOrg = _org.toPo(Organization.class);
         tempOrg.setId(_id);
         return GeneralResult.success(this.organizationService.update(tempOrg));
@@ -72,7 +72,7 @@ public class OrganizationController {
     @GetMapping(value = "/authsec/organization")
     public GeneralResult query(@RequestParam String _name) {
         log.debug("Query with name:{}", _name);
-        OrganizationQueryParam groupQueryParam = new OrganizationQueryParam();
+        OrganizationQuery groupQueryParam = new OrganizationQuery();
         groupQueryParam.setName(_name);
         return GeneralResult.success(this.organizationService.query(groupQueryParam));
     }
@@ -83,9 +83,9 @@ public class OrganizationController {
             @ApiResponse(code = 100, message = "处理成功", response = GeneralResult.class)
     )
     @PostMapping(value = "/authsec/organization/conditions")
-    public GeneralResult search(@Valid @RequestBody OrganizationQueryForm _condition) {
+    public GeneralResult search(@Valid @RequestBody OrganizationPageQuery _condition) {
         log.debug("Search with groupQueryForm:{}", _condition);
-        return GeneralResult.success(this.organizationService.query(_condition.toParam(OrganizationQueryParam.class)));
+        return GeneralResult.success(this.organizationService.query(_condition.toParam(OrganizationQuery.class)));
     }
 
     @ApiOperation(value = "根据父id查询组织机构", notes = "根据父id查询组织机构列表")

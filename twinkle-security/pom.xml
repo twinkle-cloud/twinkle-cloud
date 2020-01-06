@@ -28,10 +28,10 @@
     </parent>
 
     <modules>
+        <module>twinkle-security-core</module>
         <module>twinkle-authentication</module>
         <module>twinkle-authorization</module>
         <module>twinkle-authclient</module>
-        <module>twinkle-secclient</module>
     </modules>
 
     <dependencies>

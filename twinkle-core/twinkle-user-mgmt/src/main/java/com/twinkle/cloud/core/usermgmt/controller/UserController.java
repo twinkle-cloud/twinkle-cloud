@@ -2,10 +2,10 @@ package com.twinkle.cloud.core.usermgmt.controller;
 
 import com.twinkle.cloud.common.data.GeneralResult;
 import com.twinkle.cloud.core.usermgmt.entity.UserInfo;
-import com.twinkle.cloud.core.usermgmt.entity.form.PasswordUpdateForm;
-import com.twinkle.cloud.core.usermgmt.entity.form.UserForm;
-import com.twinkle.cloud.core.usermgmt.entity.form.UserQueryForm;
-import com.twinkle.cloud.core.usermgmt.entity.param.UserQueryParam;
+import com.twinkle.cloud.core.usermgmt.entity.dto.PasswordUpdateRequest;
+import com.twinkle.cloud.core.usermgmt.entity.dto.UserRequest;
+import com.twinkle.cloud.core.usermgmt.entity.query.UserPageQuery;
+import com.twinkle.cloud.core.usermgmt.entity.query.UserQuery;
 import com.twinkle.cloud.core.usermgmt.entity.User;
 import com.twinkle.cloud.core.usermgmt.service.UserService;
 import io.swagger.annotations.*;
@@ -34,7 +34,7 @@ public class UserController {
     @ApiOperation(value = "新增用户", notes = "新增一个用户")
     @ApiImplicitParam(name = "Register User Info", value = "新增用户form表单", required = true, dataType = "UserForm")
     @PostMapping(value = "/noauth/user")
-    public GeneralResult add(@Valid @RequestBody UserForm _userInfo) {
+    public GeneralResult add(@Valid @RequestBody UserRequest _userInfo) {
         log.debug("User Info:{}", _userInfo);
         User tempUser = _userInfo.toPo(User.class);
         UserInfo tempUserInfo = _userInfo.parseUserInfo();
@@ -53,7 +53,7 @@ public class UserController {
     @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "string"),
             @ApiImplicitParam(name = "userUpdateForm", value = "用户实体", required = true, dataType = "UserForm")})
     @PutMapping(value = "/authsec/user/{_id}")
-    public GeneralResult update(@PathVariable Long _id, @Valid @RequestBody UserForm _userInfo) {
+    public GeneralResult update(@PathVariable Long _id, @Valid @RequestBody UserRequest _userInfo) {
         User tempUser = _userInfo.toPo(User.class);
         tempUser.setId(_id);
         UserInfo tempUserInfo = _userInfo.parseUserInfo();
@@ -70,9 +70,9 @@ public class UserController {
     }
 
     @ApiOperation(value = "获取用户", notes = "根据用户唯一标识（LoginName or Phone）获取用户信息")
-    @ApiImplicitParam(paramType = "query", name = "uniqueId", value = "用户唯一标识", required = true, dataType = "string")
+    @ApiImplicitParam(paramType = "query", name = "_uniqueId", value = "用户唯一标识", required = true, dataType = "string")
     @ApiResponses(@ApiResponse(code = 200, message = "处理成功", response = GeneralResult.class))
-    @GetMapping(value = "/noauth/user/{_id}")
+    @GetMapping(value = "/noauth/user")
     public GeneralResult query(@RequestParam String _uniqueId) {
         log.debug("query with username or mobile:{}", _uniqueId);
         return GeneralResult.success(this.userService.getByUniqueId(_uniqueId));
@@ -82,16 +82,16 @@ public class UserController {
     @ApiImplicitParam(name = "userQueryForm", value = "用户查询参数", required = true, dataType = "UserQueryForm")
     @ApiResponses(@ApiResponse(code = 200, message = "处理成功", response = GeneralResult.class))
     @PostMapping(value = "/authsec/user/conditions")
-    public GeneralResult search(@Valid @RequestBody UserQueryForm _condition) {
+    public GeneralResult search(@Valid @RequestBody UserPageQuery _condition) {
         log.debug("Search User with condition:{}", _condition);
-        return GeneralResult.success(this.userService.query(_condition.getPage(), _condition.toParam(UserQueryParam.class)));
+        return GeneralResult.success(this.userService.query(_condition.getPage(), _condition.toParam(UserQuery.class)));
     }
 
     @ApiOperation(value = "更新密码", notes = "更新用户密码")
     @ApiImplicitParam(name = "Update Password", value = "用户查询参数", required = true, dataType = "PasswordUpdateForm")
     @ApiResponses(@ApiResponse(code = 200, message = "处理成功", response = GeneralResult.class))
     @PutMapping(value = "/authsec/user/password")
-    public GeneralResult updatePassword(@Valid @RequestBody PasswordUpdateForm _password) {
+    public GeneralResult updatePassword(@Valid @RequestBody PasswordUpdateRequest _password) {
         log.debug("Update the [{}]'s password.", _password.getUserId());
         return GeneralResult.success(this.userService.updatePassword(_password));
     }

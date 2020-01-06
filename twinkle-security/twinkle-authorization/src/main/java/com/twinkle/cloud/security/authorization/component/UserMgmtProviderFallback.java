@@ -1,8 +1,8 @@
 package com.twinkle.cloud.security.authorization.component;
 
 import com.twinkle.cloud.common.data.GeneralResult;
-import com.twinkle.cloud.security.authorization.entity.Role;
-import com.twinkle.cloud.security.authorization.entity.User;
+import com.twinkle.cloud.common.data.usermgmt.SecurityRole;
+import com.twinkle.cloud.common.data.usermgmt.SecurityUser;
 import com.twinkle.cloud.security.authorization.feign.UserMgmtProvider;
 import org.springframework.stereotype.Component;
 
@@ -21,13 +21,12 @@ import java.util.Set;
 @Component
 public class UserMgmtProviderFallback implements UserMgmtProvider {
     @Override
-    public GeneralResult<User> getUserByUniqueId(String uniqueId) {
-        return GeneralResult.success(new User());
+    public GeneralResult<SecurityUser> getUserByUniqueId(String _uniqueId) {
+        return GeneralResult.success(new SecurityUser());
     }
 
     @Override
-    public GeneralResult<Set<Role>> queryRolesByUserId(Long userId) {
-        return GeneralResult.success(new HashSet<Role>());
+    public GeneralResult<Set<SecurityRole>> queryRolesByUserId(Long _userId) {
+        return GeneralResult.success(new HashSet<SecurityRole>());
     }
-
 }

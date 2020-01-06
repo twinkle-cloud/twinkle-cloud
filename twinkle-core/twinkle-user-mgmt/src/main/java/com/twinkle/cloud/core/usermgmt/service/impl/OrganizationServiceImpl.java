@@ -5,7 +5,7 @@ import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.Cached;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.twinkle.cloud.core.usermgmt.entity.param.OrganizationQueryParam;
+import com.twinkle.cloud.core.usermgmt.entity.query.OrganizationQuery;
 import com.twinkle.cloud.core.usermgmt.entity.Organization;
 import com.twinkle.cloud.core.usermgmt.mapper.OrganizationMapper;
 import com.twinkle.cloud.core.usermgmt.service.OrganizationService;
@@ -39,7 +39,7 @@ public class OrganizationServiceImpl extends ServiceImpl<OrganizationMapper, Org
     }
 
     @Override
-    public List<Organization> query(OrganizationQueryParam _condition) {
+    public List<Organization> query(OrganizationQuery _condition) {
         QueryWrapper<Organization> queryWrapper = _condition.build();
         queryWrapper.eq("name", _condition.getName());
         return this.list(queryWrapper);

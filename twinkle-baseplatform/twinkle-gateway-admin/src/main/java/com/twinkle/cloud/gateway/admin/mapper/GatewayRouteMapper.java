@@ -1,7 +1,7 @@
 package com.twinkle.cloud.gateway.admin.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.twinkle.cloud.gateway.admin.entity.po.TGatewayRoute;
+import com.twinkle.cloud.gateway.admin.entity.TGatewayRoute;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

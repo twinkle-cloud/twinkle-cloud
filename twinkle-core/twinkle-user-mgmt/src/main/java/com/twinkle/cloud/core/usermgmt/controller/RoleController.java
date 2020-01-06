@@ -1,9 +1,9 @@
 package com.twinkle.cloud.core.usermgmt.controller;
 
 import com.twinkle.cloud.common.data.GeneralResult;
-import com.twinkle.cloud.core.usermgmt.entity.form.RoleForm;
-import com.twinkle.cloud.core.usermgmt.entity.form.RoleQueryForm;
-import com.twinkle.cloud.core.usermgmt.entity.param.RoleQueryParam;
+import com.twinkle.cloud.core.usermgmt.entity.dto.RoleRequest;
+import com.twinkle.cloud.core.usermgmt.entity.query.RolePageQuery;
+import com.twinkle.cloud.core.usermgmt.entity.query.RoleQuery;
 import com.twinkle.cloud.core.usermgmt.entity.Role;
 import com.twinkle.cloud.core.usermgmt.service.RoleService;
 import io.swagger.annotations.*;
@@ -32,7 +32,7 @@ public class RoleController {
     @ApiOperation(value = "新增角色", notes = "新增一个角色")
     @ApiImplicitParam(name = "roleForm", value = "新增角色form表单", required = true, dataType = "RoleForm")
     @PostMapping(value = "/authsec/role")
-    public GeneralResult add(@Valid @RequestBody RoleForm _role) {
+    public GeneralResult add(@Valid @RequestBody RoleRequest _role) {
         log.debug("name:{}", _role);
         Role tempRole = _role.toPo(Role.class);
         return GeneralResult.success(this.roleService.add(tempRole));
@@ -51,7 +51,7 @@ public class RoleController {
             @ApiImplicitParam(name = "_role", value = "角色实体", required = true, dataType = "RoleForm")
     })
     @PutMapping(value = "/authsec/role/{_id}")
-    public GeneralResult update(@PathVariable String _id, @Valid @RequestBody RoleForm _role) {
+    public GeneralResult update(@PathVariable String _id, @Valid @RequestBody RoleRequest _role) {
         Role tempRole = _role.toPo(_id, Role.class);
         return GeneralResult.success(this.roleService.update(tempRole));
     }
@@ -75,9 +75,9 @@ public class RoleController {
     @ApiResponses(
             @ApiResponse(code = 100, message = "处理成功", response = GeneralResult.class)
     )
-    @GetMapping(value = "/authsec/role/user/{_userId}")
-    public GeneralResult query(@PathVariable Long _userId) {
-        log.debug("query with userId:{}", _userId);
+    @GetMapping(value = "/noauth/roles")
+    public GeneralResult query(@RequestParam("_userId") Long _userId) {
+        log.debug("Query roles with userId:{}", _userId);
         return GeneralResult.success(this.roleService.queryByUserId(_userId));
     }
 
@@ -87,8 +87,8 @@ public class RoleController {
             @ApiResponse(code = 100, message = "处理成功", response = GeneralResult.class)
     )
     @PostMapping(value = "/authsec/role/conditions")
-    public GeneralResult query(@Valid @RequestBody RoleQueryForm _condition) {
+    public GeneralResult query(@Valid @RequestBody RolePageQuery _condition) {
         log.debug("query with name:{}", _condition);
-        return GeneralResult.success(this.roleService.queryByUserId(_condition.getPage(), _condition.toParam(RoleQueryParam.class)));
+        return GeneralResult.success(this.roleService.queryByUserId(_condition.getPage(), _condition.toParam(RoleQuery.class)));
     }
 }

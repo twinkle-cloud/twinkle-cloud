@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.twinkle.cloud.common.constant.CommonConstant;
 import com.twinkle.cloud.common.exception.GeneralException;
 import com.twinkle.cloud.core.usermgmt.entity.UserInfo;
-import com.twinkle.cloud.core.usermgmt.entity.vo.UserInfoVo;
+import com.twinkle.cloud.core.usermgmt.entity.otd.UserInfoResponse;
 import com.twinkle.cloud.core.usermgmt.mapper.UserInfoMapper;
 import com.twinkle.cloud.core.usermgmt.service.UserInfoService;
 import lombok.extern.slf4j.Slf4j;
@@ -26,14 +26,19 @@ import java.util.Objects;
 @Service
 public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> implements UserInfoService {
     @Override
-    public UserInfoVo getByUserId(Long _userId) {
+    public UserInfo getByUserId(Long _userId) {
         UserInfo tempUser = this.getOne(new QueryWrapper<UserInfo>()
             .eq("user_id", _userId)
             .eq("status", CommonConstant.DIC_GLOBAL_STATUS_ENABLE));
         if (Objects.isNull(tempUser)) {
             throw new GeneralException("user not found with id:" + _userId);
         }
-        return new UserInfoVo(tempUser);
+        return tempUser;
+    }
+
+    @Override
+    public UserInfoResponse getUserInfoResponseByUserId(Long _userId) {
+        return new UserInfoResponse(this.getByUserId(_userId));
     }
 
     @Override

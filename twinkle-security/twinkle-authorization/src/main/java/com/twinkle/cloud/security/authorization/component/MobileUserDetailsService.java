@@ -1,8 +1,12 @@
 package com.twinkle.cloud.security.authorization.component;
 
-import com.twinkle.cloud.security.authorization.entity.User;
+import com.twinkle.cloud.common.constant.ResultCode;
+import com.twinkle.cloud.common.data.GeneralResult;
+import com.twinkle.cloud.common.data.usermgmt.SecurityUser;
 import com.twinkle.cloud.security.authorization.feign.SmsCodeProvider;
-import com.twinkle.cloud.security.authorization.service.UserService;
+import com.twinkle.cloud.security.authorization.feign.UserMgmtProvider;
+import com.twinkle.cloud.security.data.TwinkleUser;
+import com.twinkle.cloud.security.exception.UnauthorizedException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,26 +25,29 @@ import org.springframework.stereotype.Service;
 @Service("mobileUserDetailsService")
 public class MobileUserDetailsService extends CustomUserDetailsService {
     @Autowired
-    private UserService userService;
+    private UserMgmtProvider userMgmtProvider;
     @Autowired
     private SmsCodeProvider smsCodeProvider;
 
     @Override
-    public UserDetails loadUserByUsername(String uniqueId) {
+    public UserDetails loadUserByUsername(String _uniqueId) {
+        GeneralResult<SecurityUser> tempResult = this.userMgmtProvider.getUserByUniqueId(_uniqueId);
+        if(tempResult.getCode().equals(ResultCode.OPERATION_SUCCESS)) {
+            SecurityUser tempUser = tempResult.getData();
+            log.info("Load user by mobile :{}", tempUser);
 
-        User user = userService.getByUniqueId(uniqueId);
-        log.info("load user by mobile:{}", user.toString());
-
-        // 如果为mobile模式，从短信服务中获取验证码（动态密码）
-        String credentials = smsCodeProvider.getSmsCode(uniqueId, "LOGIN");
-
-        return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
-                credentials,
-                user.getEnabled(),
-                user.getAccountNonExpired(),
-                user.getCredentialsNonExpired(),
-                user.getAccountNonLocked(),
-                super.obtainGrantedAuthorities(user));
+            // 如果为mobile模式，从短信服务中获取验证码（动态密码）
+            String credentials = smsCodeProvider.getSmsCode(_uniqueId, "LOGIN");
+            TwinkleUser tempTwinkleUser = new TwinkleUser(
+                    tempUser.getId(),
+                    tempUser.getTenantId(),
+                    tempUser.getManagedOrgIds(),
+                    tempUser.getLoginName(),
+                    credentials,
+                    this.obtainGrantedAuthorities(tempUser)
+            );
+            return tempTwinkleUser;
+        }
+        throw new UnauthorizedException("Did not find user ["+_uniqueId+"].");
     }
 }

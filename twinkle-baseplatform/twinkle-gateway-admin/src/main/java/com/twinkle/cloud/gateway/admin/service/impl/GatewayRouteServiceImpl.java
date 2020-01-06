@@ -9,9 +9,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twinkle.cloud.common.bus.config.BusSenderConfiguration;
 import com.twinkle.cloud.common.bus.handler.EventSender;
-import com.twinkle.cloud.gateway.admin.entity.ov.GatewayRouteVo;
-import com.twinkle.cloud.gateway.admin.entity.param.GatewayRouteQueryParam;
-import com.twinkle.cloud.gateway.admin.entity.po.TGatewayRoute;
+import com.twinkle.cloud.gateway.admin.entity.otd.GatewayRouteResponse;
+import com.twinkle.cloud.gateway.admin.entity.query.GatewayRouteQuery;
+import com.twinkle.cloud.gateway.admin.entity.TGatewayRoute;
 import com.twinkle.cloud.gateway.admin.mapper.GatewayRouteMapper;
 import com.twinkle.cloud.gateway.admin.service.GatewayRouteService;
 import lombok.extern.slf4j.Slf4j;
@@ -110,10 +110,10 @@ public class GatewayRouteServiceImpl extends ServiceImpl<GatewayRouteMapper, TGa
     }
 
     @Override
-    public List<GatewayRouteVo> query(GatewayRouteQueryParam gatewayRouteQueryParam) {
+    public List<GatewayRouteResponse> query(GatewayRouteQuery gatewayRouteQueryParam) {
         QueryWrapper<TGatewayRoute> queryWrapper = gatewayRouteQueryParam.build();
         queryWrapper.eq(StringUtils.isNotBlank(gatewayRouteQueryParam.getUri()), "uri", gatewayRouteQueryParam.getUri());
-        return this.list(queryWrapper).stream().map(GatewayRouteVo::new).collect(Collectors.toList());
+        return this.list(queryWrapper).stream().map(GatewayRouteResponse::new).collect(Collectors.toList());
     }
 
     @Override

@@ -2,10 +2,12 @@ package com.twinkle.cloud.core.usermgmt.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.twinkle.cloud.core.usermgmt.entity.param.RoleQueryParam;
+import com.twinkle.cloud.common.data.usermgmt.SecurityRole;
+import com.twinkle.cloud.core.usermgmt.entity.query.RoleQuery;
 import com.twinkle.cloud.core.usermgmt.entity.Role;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Function: TODO ADD FUNCTION. <br/>
@@ -45,15 +47,15 @@ public interface RoleService {
      *
      * @return
      */
-    IPage<Role> queryByUserId(Page page, RoleQueryParam roleQueryParam);
+    IPage<Role> queryByUserId(Page page, RoleQuery roleQueryParam);
 
     /**
      * 根据用户id查询用户拥有的角色
      *
      * @return
-     * @param userId
+     * @param _userId
      */
-    List<Role> queryByUserId(Long userId);
+    Set<SecurityRole> queryByUserId(Long _userId);
 
     /**
      * 更新角色信息

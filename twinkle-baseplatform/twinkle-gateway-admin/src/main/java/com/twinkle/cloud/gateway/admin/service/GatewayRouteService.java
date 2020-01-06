@@ -1,8 +1,8 @@
 package com.twinkle.cloud.gateway.admin.service;
 
-import com.twinkle.cloud.gateway.admin.entity.ov.GatewayRouteVo;
-import com.twinkle.cloud.gateway.admin.entity.param.GatewayRouteQueryParam;
-import com.twinkle.cloud.gateway.admin.entity.po.TGatewayRoute;
+import com.twinkle.cloud.gateway.admin.entity.otd.GatewayRouteResponse;
+import com.twinkle.cloud.gateway.admin.entity.query.GatewayRouteQuery;
+import com.twinkle.cloud.gateway.admin.entity.TGatewayRoute;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public interface GatewayRouteService {
      *
      * @return
      */
-    List<GatewayRouteVo> query(GatewayRouteQueryParam gatewayRouteQueryParam);
+    List<GatewayRouteResponse> query(GatewayRouteQuery gatewayRouteQueryParam);
 
     /**
      * 更新网关路由信息

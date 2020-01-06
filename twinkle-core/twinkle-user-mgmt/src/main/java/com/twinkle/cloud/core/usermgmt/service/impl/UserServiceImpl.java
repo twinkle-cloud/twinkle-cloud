@@ -7,12 +7,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.twinkle.cloud.common.data.usermgmt.SecurityUser;
 import com.twinkle.cloud.common.exception.GeneralException;
 import com.twinkle.cloud.core.usermgmt.entity.UserInfo;
-import com.twinkle.cloud.core.usermgmt.entity.form.PasswordUpdateForm;
-import com.twinkle.cloud.core.usermgmt.entity.param.UserQueryParam;
+import com.twinkle.cloud.core.usermgmt.entity.dto.PasswordUpdateRequest;
+import com.twinkle.cloud.core.usermgmt.entity.query.UserQuery;
 import com.twinkle.cloud.core.usermgmt.entity.User;
-import com.twinkle.cloud.core.usermgmt.entity.vo.UserVo;
+import com.twinkle.cloud.core.usermgmt.entity.otd.UserResponse;
 import com.twinkle.cloud.core.usermgmt.mapper.UserMapper;
 import com.twinkle.cloud.core.usermgmt.service.UserInfoService;
 import com.twinkle.cloud.core.usermgmt.service.UserOrganizationService;
@@ -57,7 +58,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     @Cached(name = "user::", key = "#_id", cacheType = CacheType.BOTH)
-    public UserVo get(Long _id) {
+    public UserResponse get(Long _id) {
         User tempUser = this.getById(_id);
         if (Objects.isNull(tempUser)) {
             throw new GeneralException("user not found with id:" + _id);
@@ -65,14 +66,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         tempUser.setRoleIds(this.userRoleService.queryByUserId(_id));
         tempUser.setOrgIds(this.userOrganizationService.queryByUserId(_id));
 
-        UserVo tempUserVo = new UserVo(tempUser);
-        tempUserVo.setUserInfo(this.userInfoService.getByUserId(_id));
+        UserResponse tempUserVo = new UserResponse(tempUser);
+        tempUserVo.setUserInfo(this.userInfoService.getUserInfoResponseByUserId(_id));
         return tempUserVo;
     }
 
     @Override
     @Cached(name = "user::", key = "#_id", cacheType = CacheType.BOTH)
-    public User getByUniqueId(String _id) {
+    public SecurityUser getByUniqueId(String _id) {
         User tempUser = this.getOne(new QueryWrapper<User>()
                 .eq("login_name", _id)
                 .or()
@@ -80,8 +81,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (Objects.isNull(tempUser)) {
             throw new GeneralException("user not found with uniqueId:" + _id);
         }
-        tempUser.setRoleIds(this.userRoleService.queryByUserId(tempUser.getId()));
-        return tempUser;
+        SecurityUser tempSecurityUser = new SecurityUser();
+        tempSecurityUser.setId(tempUser.getId());
+        tempSecurityUser.setLoginName(tempUser.getLoginName());
+        tempSecurityUser.setPassword(tempUser.getPassword());
+        tempSecurityUser.setPhone(tempUser.getPhone());
+        tempSecurityUser.setRoleIds(this.userRoleService.queryByUserId(tempUser.getId()));
+        tempSecurityUser.setManagedOrgIds(this.userOrganizationService.queryByUserId(tempUser.getId()));
+
+        UserInfo tempUserInfo = this.userInfoService.getByUserId(tempUser.getId());
+        tempSecurityUser.setName(tempUserInfo.getName());
+        tempSecurityUser.setOrgId(tempUserInfo.getOrgId());
+        tempSecurityUser.setTenantId(tempUserInfo.getTenantId());
+        
+        return tempSecurityUser;
     }
 
     @Override
@@ -99,14 +112,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public IPage<UserVo> query(Page<User> _page, UserQueryParam _queryParam) {
+    public IPage<UserResponse> query(Page<User> _page, UserQuery _queryParam) {
         QueryWrapper<User> queryWrapper = _queryParam.build();
         queryWrapper.eq(StringUtils.isNotBlank(_queryParam.getName()), "name", _queryParam.getName());
         queryWrapper.eq(StringUtils.isNotBlank(_queryParam.getLoginName()), "loginname", _queryParam.getLoginName());
         queryWrapper.eq(StringUtils.isNotBlank(_queryParam.getPhone()), "phone", _queryParam.getPhone());
         // 转换成VO
         IPage<User> iPageUser = this.page(_page, queryWrapper);
-        return iPageUser.convert(UserVo::new);
+        return iPageUser.convert(UserResponse::new);
     }
 
     @Override
@@ -136,7 +149,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public boolean updatePassword(PasswordUpdateForm _password) {
+    public boolean updatePassword(PasswordUpdateRequest _password) {
         if (StringUtils.isNotBlank(_password.getPassword())) {
             throw new GeneralException("The password is not allowed to be empty.");
         }

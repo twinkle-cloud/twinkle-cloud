@@ -1,7 +1,7 @@
 package com.twinkle.cloud.core.usermgmt.service;
 
 import com.twinkle.cloud.core.usermgmt.entity.UserInfo;
-import com.twinkle.cloud.core.usermgmt.entity.vo.UserInfoVo;
+import com.twinkle.cloud.core.usermgmt.entity.otd.UserInfoResponse;
 
 /**
  * Function: TODO ADD FUNCTION. <br/>
@@ -19,7 +19,15 @@ public interface UserInfoService {
      * @param _userId
      * @return
      */
-    UserInfoVo getByUserId(Long _userId);
+    UserInfo getByUserId(Long _userId);
+
+    /**
+     * Get the UserInfoResponse with given user id.
+     *
+     * @param _userId
+     * @return
+     */
+    UserInfoResponse getUserInfoResponseByUserId(Long _userId);
 
     /**
      * Add profile for some user.

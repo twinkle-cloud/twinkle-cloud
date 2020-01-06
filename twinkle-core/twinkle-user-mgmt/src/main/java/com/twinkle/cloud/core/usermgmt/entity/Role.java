@@ -30,8 +30,8 @@ import java.util.Set;
 public class Role extends GeneralBaseEntity {
     private String code;
     private String name;
-    private Integer status = 1;
-    private Integer type = 1;
+    private Byte status = 1;
+    private Byte type = 1;
     private String comments;
     private String tenantId;
 

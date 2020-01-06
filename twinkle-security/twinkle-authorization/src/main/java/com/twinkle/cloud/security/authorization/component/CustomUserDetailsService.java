@@ -1,9 +1,12 @@
 package com.twinkle.cloud.security.authorization.component;
 
-import com.twinkle.cloud.security.authorization.entity.Role;
-import com.twinkle.cloud.security.authorization.entity.User;
-import com.twinkle.cloud.security.authorization.service.RoleService;
-import com.twinkle.cloud.security.authorization.service.UserService;
+import com.twinkle.cloud.common.constant.ResultCode;
+import com.twinkle.cloud.common.data.GeneralResult;
+import com.twinkle.cloud.common.data.usermgmt.SecurityRole;
+import com.twinkle.cloud.common.data.usermgmt.SecurityUser;
+import com.twinkle.cloud.security.authorization.feign.UserMgmtProvider;
+import com.twinkle.cloud.security.data.TwinkleUser;
+import com.twinkle.cloud.security.exception.UnauthorizedException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -28,26 +32,26 @@ import java.util.stream.Collectors;
 @Service("userDetailsService")
 public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
-    private UserService userService;
-    @Autowired
-    private RoleService roleService;
+    private UserMgmtProvider userMgmtProvider;
 
     @Override
-    public UserDetails loadUserByUsername(String uniqueId) {
+    public UserDetails loadUserByUsername(String _uniqueId) {
+        GeneralResult<SecurityUser> tempResult = this.userMgmtProvider.getUserByUniqueId(_uniqueId);
+        if (tempResult.getCode().equals(ResultCode.OPERATION_SUCCESS)) {
+            SecurityUser tempUser = tempResult.getData();
+            log.info("Load user by username :{}", tempUser);
 
-        User user = userService.getByUniqueId(uniqueId);
-        log.info("load user by username :{}", user.toString());
-
-
-
-        return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
-                user.getPassword(),
-                user.getEnabled(),
-                user.getAccountNonExpired(),
-                user.getCredentialsNonExpired(),
-                user.getAccountNonLocked(),
-                this.obtainGrantedAuthorities(user));
+            TwinkleUser tempTwinkleUser = new TwinkleUser(
+                    tempUser.getId(),
+                    tempUser.getTenantId(),
+                    tempUser.getManagedOrgIds(),
+                    tempUser.getLoginName(),
+                    tempUser.getPassword(),
+                    this.obtainGrantedAuthorities(tempUser)
+            );
+            return tempTwinkleUser;
+        }
+        throw new UnauthorizedException("Did not find user [" + _uniqueId + "].");
     }
 
     /**
@@ -56,9 +60,13 @@ public class CustomUserDetailsService implements UserDetailsService {
      * @param user
      * @return
      */
-    protected Set<GrantedAuthority> obtainGrantedAuthorities(User user) {
-        Set<Role> roles = roleService.queryUserRolesByUserId((Long)user.getId());
-        log.info("user:{},roles:{}", user.getUsername(), roles);
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getCode())).collect(Collectors.toSet());
+    protected Set<GrantedAuthority> obtainGrantedAuthorities(SecurityUser user) {
+        GeneralResult<Set<SecurityRole>> tempResult = this.userMgmtProvider.queryRolesByUserId((Long) user.getId());
+
+        if (tempResult.getCode().equals(ResultCode.OPERATION_SUCCESS)) {
+            log.info("User:{}, Roles:{}", user.getLoginName(), tempResult.getData());
+            return tempResult.getData().stream().map(item -> new SimpleGrantedAuthority(item.getCode())).collect(Collectors.toSet());
+        }
+        return new HashSet<>();
     }
 }

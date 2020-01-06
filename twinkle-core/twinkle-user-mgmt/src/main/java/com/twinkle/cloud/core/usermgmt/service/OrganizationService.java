@@ -1,7 +1,7 @@
 package com.twinkle.cloud.core.usermgmt.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.twinkle.cloud.core.usermgmt.entity.param.OrganizationQueryParam;
+import com.twinkle.cloud.core.usermgmt.entity.query.OrganizationQuery;
 import com.twinkle.cloud.core.usermgmt.entity.Organization;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public interface OrganizationService extends IService<Organization> {
      * @param _condition
      * @return
      */
-    List<Organization> query(OrganizationQueryParam _condition);
+    List<Organization> query(OrganizationQuery _condition);
 
     /**
      * 根据父id查询用户组

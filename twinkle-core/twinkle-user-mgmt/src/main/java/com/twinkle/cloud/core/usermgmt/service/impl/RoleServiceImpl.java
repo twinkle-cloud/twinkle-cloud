@@ -7,8 +7,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.twinkle.cloud.common.data.usermgmt.SecurityRole;
 import com.twinkle.cloud.common.exception.GeneralException;
-import com.twinkle.cloud.core.usermgmt.entity.param.RoleQueryParam;
+import com.twinkle.cloud.core.usermgmt.entity.query.RoleQuery;
 import com.twinkle.cloud.core.usermgmt.entity.Role;
 import com.twinkle.cloud.core.usermgmt.mapper.RoleMapper;
 import com.twinkle.cloud.core.usermgmt.service.RoleMenuService;
@@ -18,10 +19,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Function: TODO ADD FUNCTION. <br/>
@@ -80,14 +81,29 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     }
 
     @Override
-    @Cached(name = "role4user::", key = "#userId", cacheType = CacheType.BOTH)
-    public List<Role> queryByUserId(Long userId) {
-        Set<String> roleIds = this.userRoleService.queryByUserId(userId);
-        return this.listByIds(roleIds);
+    @Cached(name = "role4user::", key = "#_userId", cacheType = CacheType.BOTH)
+    public Set<SecurityRole> queryByUserId(Long _userId) {
+        Set<String> roleIds = this.userRoleService.queryByUserId(_userId);
+
+        List<Role> tempRoles = this.listByIds(roleIds);
+        if(CollectionUtils.isEmpty(tempRoles)) {
+            return new HashSet<>();
+        }
+        return tempRoles.stream().map(item -> this.convertToSecurityRole(item)).collect(Collectors.toSet());
+    }
+
+    private SecurityRole convertToSecurityRole(Role _role){
+        SecurityRole tempRole = new SecurityRole();
+        tempRole.setId(_role.getId().toString());
+        tempRole.setCode(_role.getCode());
+        tempRole.setName(_role.getName());
+        tempRole.setType(_role.getType());
+        tempRole.setStatus(_role.getStatus());
+        return tempRole;
     }
 
     @Override
-    public IPage<Role> queryByUserId(Page page, RoleQueryParam roleQueryParam) {
+    public IPage<Role> queryByUserId(Page page, RoleQuery roleQueryParam) {
         QueryWrapper<Role> queryWrapper = roleQueryParam.build();
         queryWrapper.eq(StringUtils.isNotBlank(roleQueryParam.getName()), "name", roleQueryParam.getName());
         queryWrapper.eq(StringUtils.isNotBlank(roleQueryParam.getCode()), "code", roleQueryParam.getCode());

@@ -2,10 +2,11 @@ package com.twinkle.cloud.core.usermgmt.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.twinkle.cloud.core.usermgmt.entity.form.PasswordUpdateForm;
-import com.twinkle.cloud.core.usermgmt.entity.param.UserQueryParam;
+import com.twinkle.cloud.common.data.usermgmt.SecurityUser;
+import com.twinkle.cloud.core.usermgmt.entity.dto.PasswordUpdateRequest;
+import com.twinkle.cloud.core.usermgmt.entity.query.UserQuery;
 import com.twinkle.cloud.core.usermgmt.entity.User;
-import com.twinkle.cloud.core.usermgmt.entity.vo.UserVo;
+import com.twinkle.cloud.core.usermgmt.entity.otd.UserResponse;
 
 /**
  * Function: TODO ADD FUNCTION. <br/>
@@ -23,7 +24,7 @@ public interface UserService {
      * @param _id
      * @return
      */
-    UserVo get(Long _id);
+    UserResponse get(Long _id);
 
     /**
      * 根据用户唯一标识获取用户信息
@@ -32,7 +33,7 @@ public interface UserService {
      * @param _id
      * @return
      */
-    User getByUniqueId(String _id);
+    SecurityUser getByUniqueId(String _id);
 
     /**
      * Add new User.
@@ -48,7 +49,7 @@ public interface UserService {
      * @param _password
      * @return
      */
-    boolean updatePassword(PasswordUpdateForm _password);
+    boolean updatePassword(PasswordUpdateRequest _password);
 
     /**
      * Reset the _userId's password.
@@ -65,7 +66,7 @@ public interface UserService {
      * @param _queryParam
      * @return
      */
-    IPage<UserVo> query(Page<User> _page, UserQueryParam _queryParam);
+    IPage<UserResponse> query(Page<User> _page, UserQuery _queryParam);
 
     /**
      * 更新用户信息

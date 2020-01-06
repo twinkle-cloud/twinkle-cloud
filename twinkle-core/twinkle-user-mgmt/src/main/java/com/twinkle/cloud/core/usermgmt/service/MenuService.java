@@ -2,7 +2,7 @@ package com.twinkle.cloud.core.usermgmt.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.twinkle.cloud.core.usermgmt.entity.param.MenuQueryParam;
+import com.twinkle.cloud.core.usermgmt.entity.query.MenuQuery;
 import com.twinkle.cloud.core.usermgmt.entity.Menu;
 
 import java.util.List;
@@ -38,14 +38,14 @@ public interface MenuService {
      *
      * @return
      */
-    IPage<Menu> query(Page _page, MenuQueryParam _condition);
+    IPage<Menu> query(Page _page, MenuQuery _condition);
 
     /**
      * 查询菜单
      *
      * @return
      */
-    List<Menu> query(MenuQueryParam _condition);
+    List<Menu> query(MenuQuery _condition);
 
     /**
      * 根据username查询角色拥有的资源

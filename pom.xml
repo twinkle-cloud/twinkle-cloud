@@ -245,6 +245,13 @@
                 <type>jar</type>
                 <scope>compile</scope>
             </dependency>
+            <dependency>
+                <groupId>com.twinkle.cloud</groupId>
+                <artifactId>twinkle-security-core</artifactId>
+                <version>${twinklecloud.version}</version>
+                <type>jar</type>
+                <scope>compile</scope>
+            </dependency>
 
             <!-- lombok lib -->
             <dependency>
