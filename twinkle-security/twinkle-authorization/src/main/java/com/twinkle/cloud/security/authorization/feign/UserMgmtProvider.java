@@ -19,7 +19,7 @@ import java.util.Set;
  * @see
  * @since JDK 1.8
  */
-@FeignClient(name = "twinkle-usermgmt", fallback = UserMgmtProviderFallback.class)
+@FeignClient(name = "twinkle-user-mgmt", fallback = UserMgmtProviderFallback.class)
 public interface UserMgmtProvider {
     /**
      * Try to load the user info with given login name.

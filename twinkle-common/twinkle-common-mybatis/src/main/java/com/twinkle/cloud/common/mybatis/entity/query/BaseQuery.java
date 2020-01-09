@@ -1,7 +1,7 @@
 package com.twinkle.cloud.common.mybatis.entity.query;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.twinkle.cloud.common.mybatis.entity.BaseEntity;
+import com.twinkle.cloud.common.mybatis.entity.IEntity;
 
 import java.util.Date;
 
@@ -14,7 +14,7 @@ import java.util.Date;
  * @see
  * @since JDK 1.8
  */
-public class BaseQuery<T extends BaseEntity> {
+public class BaseQuery<T extends IEntity> {
     private Date createdTimeStart;
     private Date createdTimeEnd;
 

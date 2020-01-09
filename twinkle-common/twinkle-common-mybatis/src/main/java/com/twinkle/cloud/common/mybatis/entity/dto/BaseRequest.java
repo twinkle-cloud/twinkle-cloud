@@ -1,6 +1,6 @@
 package com.twinkle.cloud.common.mybatis.entity.dto;
 
-import com.twinkle.cloud.common.mybatis.entity.BaseEntity;
+import com.twinkle.cloud.common.mybatis.entity.IEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ import java.io.Serializable;
 @ApiModel
 @Slf4j
 @Data
-public class BaseRequest<E extends BaseEntity> {
+public class BaseRequest<E extends IEntity> {
     /**
      * 用户名
      */
@@ -47,7 +47,13 @@ public class BaseRequest<E extends BaseEntity> {
      */
     public E toPo(Serializable id, Class<E> clazz) {
         E e = BeanUtils.instantiateClass(clazz);
-        e.setId(id);
+        if(id instanceof Long) {
+            e.setId((Long)id);
+        } else if(id instanceof Long) {
+            e.setId((Integer)id);
+        } else {
+            e.setId((String)id);
+        }
         BeanUtils.copyProperties(this, e);
         return e;
     }

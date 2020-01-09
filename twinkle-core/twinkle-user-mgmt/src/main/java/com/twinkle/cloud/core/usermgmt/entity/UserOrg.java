@@ -3,12 +3,11 @@ package com.twinkle.cloud.core.usermgmt.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.twinkle.cloud.common.mybatis.entity.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
 
 /**
  * Function: TODO ADD FUNCTION. <br/>
@@ -24,7 +23,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("U_USER_ORG_MAP")
-public class UserOrg implements Serializable {
+public class UserOrg extends AbstractEntity {
     /**
      * The User's ID
      */

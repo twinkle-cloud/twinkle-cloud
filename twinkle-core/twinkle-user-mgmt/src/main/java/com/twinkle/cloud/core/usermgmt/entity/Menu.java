@@ -3,7 +3,7 @@ package com.twinkle.cloud.core.usermgmt.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.twinkle.cloud.common.mybatis.entity.GeneralBaseEntity;
+import com.twinkle.cloud.common.mybatis.entity.GeneralEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,7 +23,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("S_MENU")
-public class Menu extends GeneralBaseEntity {
+public class Menu extends GeneralEntity {
+    @TableId(type = IdType.ASSIGN_UUID)
+    private String id;
     private String code;
     private String name;
     private String parentId;

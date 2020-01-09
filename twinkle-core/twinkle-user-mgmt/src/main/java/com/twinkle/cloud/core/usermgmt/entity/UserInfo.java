@@ -3,7 +3,7 @@ package com.twinkle.cloud.core.usermgmt.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.twinkle.cloud.common.mybatis.entity.BaseEntity;
+import com.twinkle.cloud.common.mybatis.entity.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("U_USER_INFO")
-public class UserInfo extends BaseEntity {
+public class UserInfo extends AbstractEntity {
     @TableId(type = IdType.AUTO)
     private Long id;
     /**
@@ -41,7 +41,7 @@ public class UserInfo extends BaseEntity {
     /**
      * Mail Address.
      */
-    private String eMail;
+    private String email;
 
     /**
      * Org ID which belongs to.

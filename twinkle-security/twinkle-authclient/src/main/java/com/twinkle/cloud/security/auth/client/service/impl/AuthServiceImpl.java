@@ -10,7 +10,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.util.CollectionUtils;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -43,8 +46,12 @@ public class AuthServiceImpl implements AuthService {
      * 不需要网关签权的url配置(/oauth,/open)
      * 默认/oauth开头是不需要的
      */
-    @Value("${gate.ignore.authentication.startWith}")
-    private String ignoreUrls = "/oauth";
+    @Value("${twinkle.security.ignored}")
+    private List<String> ignoreUrls;
+    /**
+     * Ant path Matcher.
+     */
+    private AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     @Override
     public GeneralResult<Boolean> authenticate(String authentication, String url, String method) {
@@ -53,7 +60,17 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean ignoreAuthentication(String url) {
-        return Stream.of(this.ignoreUrls.split(",")).anyMatch(ignoreUrl -> url.startsWith(StringUtils.trim(ignoreUrl)));
+        if(CollectionUtils.isEmpty(this.ignoreUrls)) {
+            return false;
+        }
+        for(String tempPattern : ignoreUrls) {
+            boolean tempResult = this.antPathMatcher.match(tempPattern, url);
+            if(tempResult) {
+                return true;
+            }
+        }
+        return false;
+        //return Stream.of(this.ignoreUrls.split(",")).anyMatch(ignoreUrl -> url.startsWith(StringUtils.trim(ignoreUrl)));
     }
 
     @Override

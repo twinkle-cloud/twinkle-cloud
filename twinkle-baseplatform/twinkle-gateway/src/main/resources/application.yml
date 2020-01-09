@@ -43,13 +43,15 @@ spring:
             rate-limiter: "#{@defaultRedisRateLimiter}"  #SPEL表达式去的对应的bean
             key-resolver: "#{@apiKeyResolver}" #SPEL表达式去的对应的bean
 
-
 twinkle:
   bus:
     receiver:
       exchange-name: spring-boot-exchange
       routing-key: gateway-route
       enable: true
+  security:
+    ignored: /oauth/**,/open/**,/v2/api-docs/**, /noauth/**, /swagger**,/swagger**/**,/webjars/**,/v2/**, /js/**, /css/**
+
 
 feign:
   sentinel:
@@ -78,7 +80,7 @@ jetcache:
 gate:
   ignore:
     authentication:
-      startWith: /noauth,/oauth,/open,/v2/api-docs
+      startWith: /*/noauth,/noauth,/oauth,/open,/v2/api-docs
 
 management:
   endpoints:

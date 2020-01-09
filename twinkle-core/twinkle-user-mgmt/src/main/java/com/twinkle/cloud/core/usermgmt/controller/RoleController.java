@@ -71,12 +71,12 @@ public class RoleController {
     }
 
     @ApiOperation(value = "查询角色", notes = "根据用户id查询用户所拥有的角色信息")
-    @ApiImplicitParam(paramType = "path", name = "_userId", value = "用户id", required = true, dataType = "long")
+    @ApiImplicitParam(paramType = "query", name = "_userId", value = "用户id", required = true, dataType = "long")
     @ApiResponses(
             @ApiResponse(code = 100, message = "处理成功", response = GeneralResult.class)
     )
     @GetMapping(value = "/noauth/roles")
-    public GeneralResult query(@RequestParam("_userId") Long _userId) {
+    public GeneralResult query(@RequestParam(value = "_userId") Long _userId) {
         log.debug("Query roles with userId:{}", _userId);
         return GeneralResult.success(this.roleService.queryByUserId(_userId));
     }

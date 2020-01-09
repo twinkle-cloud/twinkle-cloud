@@ -2,7 +2,7 @@ package com.twinkle.cloud.common.mybatis.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.twinkle.cloud.common.context.UserContextHolder;
-import com.twinkle.cloud.common.mybatis.entity.BaseEntity;
+import com.twinkle.cloud.common.mybatis.entity.IEntity;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.reflection.MetaObject;
 
@@ -25,7 +25,7 @@ public class PoMetaObjectHandler implements MetaObjectHandler {
      * @return
      */
     private String getCurrentUsername() {
-        return StringUtils.defaultIfBlank(UserContextHolder.getInstance().getUsername(), BaseEntity.DEFAULT_USERNAME);
+        return StringUtils.defaultIfBlank(UserContextHolder.getInstance().getUsername(), IEntity.DEFAULT_USERNAME);
     }
 
     @Override

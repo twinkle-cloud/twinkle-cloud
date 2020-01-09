@@ -89,12 +89,18 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         if(CollectionUtils.isEmpty(tempRoles)) {
             return new HashSet<>();
         }
+//        QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.in("id", tempRoles);
+//        List<Role> roles = this.list(queryWrapper);
+        log.debug("The roles are :{}", tempRoles);
+
         return tempRoles.stream().map(item -> this.convertToSecurityRole(item)).collect(Collectors.toSet());
     }
 
     private SecurityRole convertToSecurityRole(Role _role){
+        log.debug("The role is: {}", _role);
         SecurityRole tempRole = new SecurityRole();
-        tempRole.setId(_role.getId().toString());
+        tempRole.setId(_role.getId());
         tempRole.setCode(_role.getCode());
         tempRole.setName(_role.getName());
         tempRole.setType(_role.getType());

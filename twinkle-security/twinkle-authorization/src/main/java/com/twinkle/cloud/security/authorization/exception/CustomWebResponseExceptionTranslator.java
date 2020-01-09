@@ -16,6 +16,7 @@ import org.springframework.security.oauth2.provider.error.WebResponseExceptionTr
 public class CustomWebResponseExceptionTranslator implements WebResponseExceptionTranslator<OAuth2Exception> {
     @Override
     public ResponseEntity<OAuth2Exception> translate(Exception e) {
+        //java.lang.ClassCastException: org.springframework.security.authentication.InternalAuthenticationServiceException cannot be cast to org.springframework.security.oauth2.common.exceptions.OAuth2Exception
 
         OAuth2Exception oAuth2Exception = (OAuth2Exception) e;
         return ResponseEntity.status(oAuth2Exception.getHttpErrorCode())

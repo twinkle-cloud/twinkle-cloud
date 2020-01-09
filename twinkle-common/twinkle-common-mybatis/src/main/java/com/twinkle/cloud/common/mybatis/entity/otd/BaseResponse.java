@@ -1,6 +1,6 @@
 package com.twinkle.cloud.common.mybatis.entity.otd;
 
-import com.twinkle.cloud.common.mybatis.entity.BaseEntity;
+import com.twinkle.cloud.common.mybatis.entity.IEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +17,6 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
-public class BaseResponse<E extends BaseEntity> implements Serializable {
+public class BaseResponse<E extends IEntity> implements Serializable {
     private Serializable id;
 }

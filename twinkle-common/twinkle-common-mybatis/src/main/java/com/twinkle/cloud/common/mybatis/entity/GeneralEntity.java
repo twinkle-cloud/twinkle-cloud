@@ -14,7 +14,7 @@ import lombok.*;
  * @since JDK 1.8
  */
 @Data
-public class GeneralBaseEntity extends BaseEntity {
+public class GeneralEntity extends AbstractEntity {
     @TableField(fill = FieldFill.INSERT)
     private String creatorId;
 }

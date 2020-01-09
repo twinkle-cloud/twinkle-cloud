@@ -1,13 +1,11 @@
 package com.twinkle.cloud.core.usermgmt.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.twinkle.cloud.common.mybatis.entity.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Function: TODO ADD FUNCTION. <br/>
@@ -23,7 +21,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("U_USER_ROLE_MAP")
-public class Tenant implements Serializable {
+public class Tenant extends AbstractEntity {
     /**
      * The ID for the tenant.
      */
@@ -53,9 +51,4 @@ public class Tenant implements Serializable {
      * The status for the tenant.
      */
     private Integer status;
-
-    @TableField(insertStrategy = FieldStrategy.IGNORED, updateStrategy = FieldStrategy.IGNORED)
-    private Date createDate;
-    @TableField(insertStrategy = FieldStrategy.IGNORED, updateStrategy = FieldStrategy.IGNORED)
-    private Date updateDate;
 }

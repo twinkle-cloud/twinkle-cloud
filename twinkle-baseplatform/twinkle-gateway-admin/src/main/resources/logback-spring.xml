@@ -67,6 +67,9 @@
 	<logger name="com.zaxxer">
 		<level value="WARN" />
 	</logger>
+	<logger name="org.mybatis">
+		<level value="WARN" />
+	</logger>
 	<logger name="org.postgresql">
 		<level value="WARN" />
 	</logger>

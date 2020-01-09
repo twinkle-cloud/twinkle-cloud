@@ -67,6 +67,9 @@
 	<logger name="swagger">
 		<level value="ERROR" />
 	</logger>
+	<logger name="com.alicp">
+		<level value="WARN" />
+	</logger>
 	<logger name="reactor">
 		<level value="ERROR" />
 	</logger>

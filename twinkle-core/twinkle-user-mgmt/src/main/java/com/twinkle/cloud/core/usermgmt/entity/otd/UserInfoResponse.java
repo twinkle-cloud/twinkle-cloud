@@ -36,7 +36,7 @@ public class UserInfoResponse extends BaseResponse<UserInfo> {
     /**
      * Mail Address.
      */
-    private String eMail;
+    private String email;
     /**
      * The Org which the user belongs to.
      */

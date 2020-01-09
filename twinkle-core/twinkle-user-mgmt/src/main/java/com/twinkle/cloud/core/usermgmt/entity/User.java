@@ -1,7 +1,7 @@
 package com.twinkle.cloud.core.usermgmt.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.twinkle.cloud.common.mybatis.entity.BaseEntity;
+import com.twinkle.cloud.common.mybatis.entity.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +24,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("U_USER")
-public class User extends BaseEntity {
+public class User extends AbstractEntity {
     @TableId(type = IdType.AUTO)
     private Long id;
 

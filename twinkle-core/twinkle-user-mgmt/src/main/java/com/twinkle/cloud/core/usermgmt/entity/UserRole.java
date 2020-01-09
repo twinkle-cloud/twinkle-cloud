@@ -3,7 +3,7 @@ package com.twinkle.cloud.core.usermgmt.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.twinkle.cloud.common.mybatis.entity.GeneralBaseEntity;
+import com.twinkle.cloud.common.mybatis.entity.GeneralEntity;
 import lombok.*;
 
 /**
@@ -21,7 +21,7 @@ import lombok.*;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @TableName("U_USER_ROLE_MAP")
-public class UserRole extends GeneralBaseEntity {
+public class UserRole extends GeneralEntity {
     @TableId(type = IdType.AUTO)
     private Integer id;
     /**

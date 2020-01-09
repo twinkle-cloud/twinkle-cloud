@@ -51,6 +51,9 @@ public class UserRequest extends BaseRequest<User> {
     @ApiModelProperty(value = "用户职位")
     private Integer title = 1;
 
+    @ApiModelProperty(value = "用户所属部门")
+    private Integer orgId;
+
     @ApiModelProperty(value = "用户拥有的角色id列表")
     private Set<String> roleIds;
 
@@ -65,7 +68,7 @@ public class UserRequest extends BaseRequest<User> {
 
     public void addProfile(UserInfoResponse _profile) {
         this.name = _profile.getName();
-        this.email = _profile.getEMail();
+        this.email = _profile.getEmail();
         this.gender = _profile.getGender();
         this.title = _profile.getTitle();
         this.tenantId = _profile.getTenantId();
@@ -73,10 +76,11 @@ public class UserRequest extends BaseRequest<User> {
 
     public UserInfo parseUserInfo() {
         UserInfo tempUserInfo = new UserInfo();
-        tempUserInfo.setEMail(this.email);
+        tempUserInfo.setEmail(this.email);
         tempUserInfo.setGender(this.gender);
         tempUserInfo.setName(this.name);
         tempUserInfo.setTitle(this.title);
+        tempUserInfo.setOrgId(this.orgId);
         tempUserInfo.setTenantId(this.tenantId);
         return tempUserInfo;
     }

@@ -20,6 +20,10 @@
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-netflix-rabbion</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.cloud</groupId>
                     <artifactId>spring-cloud-netflix-hystrix</artifactId>
                 </exclusion>
             </exclusions>
@@ -84,7 +88,7 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <phase>deploy</phase>
+                        <phase>install</phase>
                         <goals>
                             <goal>build</goal>
                         </goals>
