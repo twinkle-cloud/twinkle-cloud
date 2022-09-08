@@ -76,7 +76,7 @@
         <pagehelper.version>1.2.10</pagehelper.version>
         <security.oauth.version>2.3.6.RELEASE</security.oauth.version>
         <mysql-driver.version>8.0.17</mysql-driver.version>
-        <pgsql-driver.version>42.2.8</pgsql-driver.version>
+        <pgsql-driver.version>42.4.1</pgsql-driver.version>
     </properties>
 
     <profiles>
